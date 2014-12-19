@@ -1,6 +1,7 @@
 package co.stayzeal.contacts;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,6 +9,9 @@ import android.view.MenuItem;
 
 public class MainActivity extends Activity {
 
+	private FragmentManager fragmentManger=getFragmentManager();
+	
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

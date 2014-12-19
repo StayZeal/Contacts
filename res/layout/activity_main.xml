@@ -3,10 +3,6 @@
     android:layout_height="match_parent"  
     android:baselineAligned="false">
     
-<!--     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" /> -->
     <fragment
         android:id="@+id/messageFragement"
         android:name="co.stayzeal.contacts.MessageFragment"
