@@ -5,14 +5,14 @@
     
     <fragment
         android:id="@+id/messageFragement"
-        android:name="co.stayzeal.contacts.MessageFragment"
+        android:name="co.stayzeal.contact.MessageFragment"
         android:layout_width="0dip"  
         android:layout_height="match_parent"  
         android:layout_weight="1"
         />
     <fragment
         android:id="@+id/historyFragement"
-        android:name="co.stayzeal.contacts.HistoryMessage"
+        android:name="co.stayzeal.contact.CallLogFragment"
         android:layout_width="0dip"  
         android:layout_height="match_parent"  
         android:layout_weight="1"
