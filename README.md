@@ -12,13 +12,6 @@ Android Contacts List （Android 通讯录）
 ----------------------
 ###1、Fragment 实现菜单栏导航
 ###2、ListView 实现列表显示各种信息
-  
-### 小标题
-  小标题类似html的\<h3\><br />
-  小标题的格式如下 ### 小标题<br />
-  注意#和标题字符中间要有空格
-
-### 注意!!!下面所有语法的提示我都先用小标题提醒了!!! 
 
     自己闲着无聊，做个通讯录用用，省的没事总备份通讯录，也不用被第三方软件盗取通讯录信息
 
@@ -42,9 +35,7 @@ Android Contacts List （Android 通讯录）
    }
 
     }
-### 链接
-1.[点击这里你可以链接到www.google.com](http://www.google.com)<br />
-2.[点击这里我你可以链接到我的CSDN博客](http://blog.csdn.net/authork)<br />
+[我的CSDN博客](http://blog.csdn.net/authork)<br />
 
 ###只是显示图片
 ![github](http://github.com/unicorn.png "github")
