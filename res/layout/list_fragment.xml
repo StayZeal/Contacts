@@ -4,10 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
+    <!-- <TextView
         android:id="@+id/textView1"
        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:text="联系人页面" />
+        android:text="联系人页面" /> -->
+    <ListView 
+        android:id="@+id/contactListView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        ></ListView>
 
 </LinearLayout>
