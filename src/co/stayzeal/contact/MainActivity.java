@@ -1,15 +1,17 @@
 package co.stayzeal.contact;
 
-import co.stayzeal.contacts.R;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import co.stayzeal.contact.menu.FragmentIndicator;
+import co.stayzeal.contact.menu.FragmentIndicator.OnIndicateListener;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.view.View;
+import android.view.animation.Transformation;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity  {
 
 	/**
 	 * 动态添加Fragment主要分为4步：
@@ -19,33 +21,43 @@ public class MainActivity extends Activity {
 	 * 4.提交事务，调用commit方法提交。
 	 * getFragmentManager().beginTransaction().replace(R.id.main_layout, fragment1).commit();
 	 */
-	private FragmentManager fragmentManger=getFragmentManager();
-	private Fragment dialFragment=new Fragment();
-	private Fragment historyFragment=new Fragment();
-	private Fragment messageFragment=new Fragment();
-	private Fragment listFragment=new Fragment(); 
+	/*private FragmentManager fragmentManger=getFragmentManager();
+	private DialFragment dialFragment=new DialFragment();
+	private CallLogFragment callLogFragment=new CallLogFragment();
+	private MessageFragment messageFragment=new MessageFragment();
+	private ListFragent listFragment=new ListFragent(); */
 	
+	private static Fragment[] mFragments;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.w("main activity :", "oncreate function 执行");
+        setFragmentIndicator(0);
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+    
+    private void setFragmentIndicator(int whichIsDefault) {  
+        mFragments = new Fragment[4];  
+        mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.dialFragement);  
+        mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.callLogFragement);  
+        mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.listFragment); 
+        mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.messageFragement); 
+        Log.w("main activity :", "main activity获取fragment完毕");
+        Log.w("menu数目：",String.valueOf(mFragments.length));
+        FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();  
+  
+        FragmentIndicator mIndicator = (FragmentIndicator) findViewById(R.id.bottomMenu);  
+        FragmentIndicator.setIndicator(whichIsDefault);  
+        mIndicator.setOnIndicateListener(new OnIndicateListener() {  
+            @Override  
+            public void onIndicate(View v, int which) {  
+            	Log.w("main activity: OnIndicateListener()", "绑定监听器:显示Index： "+which);
+                getSupportFragmentManager().beginTransaction()  
+                        .hide(mFragments[0]).hide(mFragments[1])  
+                        .hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();  
+            }  
+        });  
+    }  
+    
 }

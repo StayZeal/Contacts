@@ -1,20 +1,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"  
-    android:layout_height="match_parent"  
+    android:layout_height="match_parent"
+    android:orientation="vertical"  
     android:baselineAligned="false">
+    
+    <fragment 
+        android:id="@+id/dialFragement"
+        android:name="co.stayzeal.contact.DialFragment"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:layout_height="fill_parent"
+        />
+    
+    <fragment
+        android:id="@+id/callLogFragement"
+        android:name="co.stayzeal.contact.CallLogFragment"
+        android:layout_width="fill_parent"  
+        android:layout_height="fill_parent"  
+        android:layout_weight="1"
+        />
+    
+    <fragment 
+        android:id="@+id/listFragment"
+        android:name="co.stayzeal.contact.ListFragent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        />
     
     <fragment
         android:id="@+id/messageFragement"
         android:name="co.stayzeal.contact.MessageFragment"
-        android:layout_width="0dip"  
-        android:layout_height="match_parent"  
+        android:layout_width="fill_parent"  
+        android:layout_height="fill_parent"  
         android:layout_weight="1"
         />
-    <fragment
-        android:id="@+id/historyFragement"
-        android:name="co.stayzeal.contact.CallLogFragment"
-        android:layout_width="0dip"  
-        android:layout_height="match_parent"  
-        android:layout_weight="1"
+    
+    <co.stayzeal.contact.menu.FragmentIndicator
+        android:id="@+id/bottomMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         />
 </LinearLayout>
