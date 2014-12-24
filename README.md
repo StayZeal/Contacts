@@ -1,4 +1,4 @@
-Android Contacts List Android 通讯录
+Android Contacts List （Android 通讯录）
 ===================================
   
 功能模块：
@@ -8,10 +8,10 @@ Android Contacts List Android 通讯录
 ####3.联系人列表
 ####4.短信息
   
-用的的一些控件和技术：
+用到的一些控件和技术：
 ----------------------
 ###1、Fragment 实现菜单栏导航
-#2、
+###2、ListView 实现列表显示各种信息
   
 ### 小标题
   小标题类似html的\<h3\><br />
@@ -44,7 +44,7 @@ Android Contacts List Android 通讯录
     }
 ### 链接
 1.[点击这里你可以链接到www.google.com](http://www.google.com)<br />
-2.[点击这里我你可以链接到我的博客](http://guoyunsky.iteye.com)<br />
+2.[点击这里我你可以链接到我的CSDN博客](http://blog.csdn.net/authork)<br />
 
 ###只是显示图片
 ![github](http://github.com/unicorn.png "github")
