@@ -8,5 +8,7 @@
     <string name="callLogTitle">通话记录</string>
     <string name="contactsTitle">联系人</string>
     <string name="msgTitle">短信</string>
+    
+    <string name="contactInfo">联系人信息</string>
 
 </resources>

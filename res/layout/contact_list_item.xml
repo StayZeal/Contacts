@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/contactIcon"
         android:layout_width="50dp"
-        android:layout_height="5dp"
+        android:layout_height="50dp"
         android:contentDescription="头像"
         />
     

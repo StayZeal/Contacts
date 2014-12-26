@@ -5,12 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -19,7 +20,7 @@ import android.widget.TextView;
 
 public class ListFragment extends Fragment {
 
-	private Context context;
+	//private Context context;
 	private ListView contactList;
 	private List<Map<String,Object>> dataList;
 	private MyAdapter myAdapter;
@@ -30,70 +31,79 @@ public class ListFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.w("onCreate", "Ö´ÐÐ");
 		super.onCreate(savedInstanceState);
-		init();
+		
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		Log.w("onCreateView", "Ö´ÐÐ");
-		return inflater.inflate(R.layout.list_fragment,container);
+		Log.w("", "onCreateView()Ö´ÐÐ");
+		View view=inflater.inflate(R.layout.list_fragment,container,false);
+		contactList=(ListView) view.findViewById(R.id.contactListView);
+		init();
+		return view;
 	}
 	
 	private void init(){
-		context=getActivity();
-		contactList=new ListView(context);
-		contactList=(ListView) getActivity().findViewById(R.id.contactListView);
-		
+		Log.w(getClass().getName()+" init(): ", "start");
 		dataList=new ArrayList<Map<String,Object>>();
 		getData();
 		myAdapter=new MyAdapter();
 		contactList.setAdapter(myAdapter);
+		Log.w(getClass().getName()+" init(): ", "end");
 	}
 	
 	private void getData(){
+		Log.w(this.getClass().getName()+" getData()", "start");
 		Map<String , Object> map;
 		for(int i = 0;i<100;i++ ){
 			map=new HashMap<String, Object>();
 			map.put("contactName", "name : "+i);
 			map.put("contactNumber", "100"+ "i");
-			map.put("contactIcon", R.drawable.ic_launcher);
+			map.put("contactIcon", R.drawable.icon_tab_calllog);
 			dataList.add(map);
 		}
+		Log.w(this.getClass().getName()+" getData()", "end");
 	}
 	
 	private class MyAdapter extends BaseAdapter{
 		
+		private LayoutInflater mInflater;
+		
+		public MyAdapter() {
+			System.out.println("MyAdapter() start!!!!!!!!!");
+		    this.mInflater=LayoutInflater.from(getActivity());
+		    System.out.println("MyAdapter() end!!!!!!!!!");
+		}
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
+			System.out.println("getCount() start!!!!!!!!! "+dataList.size());
 			return dataList.size();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
 			return position;
 		}
 
 		@Override
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
 			return position;
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			
+			Log.w(getClass().getName()+" getView(): ", "start");
 			ViewHolder viewHolder;
 			
 			if(convertView==null){
-				convertView=LayoutInflater.from(getActivity()).inflate(R.layout.contact_list_item, parent);
+				System.out.println("convert==null");
+				convertView=mInflater.inflate(R.layout.contact_list_item,null);
 				viewHolder=new ViewHolder();
-				viewHolder.contactIcon=(ImageView) getActivity().findViewById(R.id.contactIcon);
-				viewHolder.contactName=(TextView) getActivity().findViewById(R.id.contactName);
-				viewHolder.contactNumber=(TextView) getActivity().findViewById(R.id.contactNumber);
+				viewHolder.contactIcon=(ImageView) convertView.findViewById(R.id.contactIcon);
+				viewHolder.contactName=(TextView) convertView.findViewById(R.id.contactName);
+				viewHolder.contactNumber=(TextView) convertView.findViewById(R.id.contactNumber);
 				convertView.setTag(viewHolder);
 			}else{
 				viewHolder=(ViewHolder) convertView.getTag();
@@ -102,6 +112,16 @@ public class ListFragment extends Fragment {
 			viewHolder.contactIcon.setImageResource((Integer) dataList.get(position).get("contactIcon"));
 			viewHolder.contactName.setText((CharSequence) dataList.get(position).get("contactText"));
 			viewHolder.contactNumber.setText((CharSequence) dataList.get(position).get("contactNumber"));
+			
+			convertView.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent=new Intent();
+					intent.setClass(getActivity(), ContactInfoActivity.class);	
+					startActivity(intent);
+					}
+			});
 			
 			return convertView;
 		}
