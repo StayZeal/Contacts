@@ -1,10 +1,9 @@
 package co.stayzeal.contact;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import co.stayzeal.contact.model.ContactInfo;
+import co.stayzeal.util.ContactOpreation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,7 +21,7 @@ public class ListFragment extends Fragment {
 
 	//private Context context;
 	private ListView contactList;
-	private List<Map<String,Object>> dataList;
+	private List<ContactInfo> dataList;
 	private MyAdapter myAdapter;
 	
 	
@@ -46,7 +45,7 @@ public class ListFragment extends Fragment {
 	
 	private void init(){
 		Log.w(getClass().getName()+" init(): ", "start");
-		dataList=new ArrayList<Map<String,Object>>();
+		
 		getData();
 		myAdapter=new MyAdapter();
 		contactList.setAdapter(myAdapter);
@@ -55,14 +54,9 @@ public class ListFragment extends Fragment {
 	
 	private void getData(){
 		Log.w(this.getClass().getName()+" getData()", "start");
-		Map<String , Object> map;
-		for(int i = 0;i<100;i++ ){
-			map=new HashMap<String, Object>();
-			map.put("contactName", "name : "+i);
-			map.put("contactNumber", "100"+ "i");
-			map.put("contactIcon", R.drawable.icon_tab_calllog);
-			dataList.add(map);
-		}
+		//dataList=new ArrayList<ContactInfo>();
+		ContactOpreation con=new ContactOpreation(getActivity());
+		dataList=con.getContactList();
 		Log.w(this.getClass().getName()+" getData()", "end");
 	}
 	
@@ -99,7 +93,7 @@ public class ListFragment extends Fragment {
 			
 			if(convertView==null){
 				System.out.println("convert==null");
-				convertView=mInflater.inflate(R.layout.contact_list_item,null);
+				convertView=mInflater.inflate(R.layout.contact_list_item, null);
 				viewHolder=new ViewHolder();
 				viewHolder.contactIcon=(ImageView) convertView.findViewById(R.id.contactIcon);
 				viewHolder.contactName=(TextView) convertView.findViewById(R.id.contactName);
@@ -109,19 +103,11 @@ public class ListFragment extends Fragment {
 				viewHolder=(ViewHolder) convertView.getTag();
 			}
 			
-			viewHolder.contactIcon.setImageResource((Integer) dataList.get(position).get("contactIcon"));
-			viewHolder.contactName.setText((CharSequence) dataList.get(position).get("contactText"));
-			viewHolder.contactNumber.setText((CharSequence) dataList.get(position).get("contactNumber"));
+			//viewHolder.contactIcon.setImageResource( dataList.get(position).getContactIcon());
+			viewHolder.contactName.setText((CharSequence) dataList.get(position).getContactName());
+			viewHolder.contactNumber.setText((CharSequence) dataList.get(position).getContactNumber());
 			
-			convertView.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					Intent intent=new Intent();
-					intent.setClass(getActivity(), ContactInfoActivity.class);	
-					startActivity(intent);
-					}
-			});
+			convertView.setOnClickListener(new ContactListItemClick(position));
 			
 			return convertView;
 		}
@@ -132,5 +118,25 @@ public class ListFragment extends Fragment {
 		ImageView contactIcon;
 		TextView contactName;
 		TextView contactNumber;
+	}
+	
+	public class ContactListItemClick implements OnClickListener{
+		
+		private int position;
+		
+		public ContactListItemClick(int position) {
+			this.position=position;
+		}
+		@Override
+		public void onClick(View v) {
+			Intent intent=new Intent();
+			Bundle idBundle=new Bundle();
+			idBundle.putString("id",String.valueOf(dataList.get(position).getId()));
+			intent.putExtra("idBundle", idBundle);
+			intent.setClass(getActivity(), ContactInfoActivity.class);	
+			startActivity(intent);
+			
+		}
+		
 	}
 }

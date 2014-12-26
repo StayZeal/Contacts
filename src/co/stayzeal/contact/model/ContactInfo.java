@@ -5,7 +5,7 @@ public class ContactInfo {
 	private int id;
 	private String contactName;
 	private String contactNumber;
-	private String contactIcon;
+	private Integer contactIcon;
 	private String address;
 	private String eamil;
 	private String relation;
@@ -28,10 +28,11 @@ public class ContactInfo {
 	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
 	}
-	public String getContactIcon() {
+	
+	public Integer getContactIcon() {
 		return contactIcon;
 	}
-	public void setContactIcon(String contactIcon) {
+	public void setContactIcon(Integer contactIcon) {
 		this.contactIcon = contactIcon;
 	}
 	public String getAddress() {
