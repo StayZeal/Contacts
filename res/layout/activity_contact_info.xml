@@ -4,11 +4,52 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <TextView 
-        android:id="@+id/contactInfoText"
+    <ImageView 
+        android:id="@+id/contactActivityIcon"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:text="联系人详细信息"        
+        android:layout_height="100dp"
         />
+    <LinearLayout
+        android:id="@+id/contactActivityPhone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        >
+        <TextView
+            android:id="@+id/contactActivityTextPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="手机号码："
+            />
+        <EditText 
+            android:id="@+id/contactActivityEditPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/contactActivityEmail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        >
+        <TextView
+            android:id="@+id/contactActivityTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3" 
+            android:text="电子邮箱:"
+            />
+        <EditText 
+            android:id="@+id/contactActivityEditEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+    
 
 </LinearLayout>

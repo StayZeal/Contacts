@@ -1,9 +1,9 @@
 package co.stayzeal.contact;
 
 import java.util.List;
-
 import co.stayzeal.contact.model.ContactInfo;
 import co.stayzeal.util.ContactOpreation;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+@SuppressLint("InflateParams")
 public class ListFragment extends Fragment {
 
 	//private Context context;
@@ -132,6 +133,7 @@ public class ListFragment extends Fragment {
 			Intent intent=new Intent();
 			Bundle idBundle=new Bundle();
 			idBundle.putString("id",String.valueOf(dataList.get(position).getId()));
+			idBundle.putString("phoneNumber", dataList.get(position).getContactNumber());
 			intent.putExtra("idBundle", idBundle);
 			intent.setClass(getActivity(), ContactInfoActivity.class);	
 			startActivity(intent);
