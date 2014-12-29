@@ -102,7 +102,7 @@ public class FragmentIndicator extends LinearLayout implements OnClickListener {
 		mIndicators[0] = createIndicator(R.drawable.icon_tab_dialer,
 				R.string.dialTitle, MyColor.COLOR_SELECT, MENU_ICON_0,
 				MENU_TEXT_0);
-		// mIndicators[0].setBackgroundResource(R.drawable.indic_select);
+	    mIndicators[0].setBackgroundResource(R.drawable.bottombar_bg);
 		mIndicators[0].setTag(Integer.valueOf(0));
 		mIndicators[0].setOnClickListener(this);
 		mIndicators[0].setLayoutParams(new LinearLayout.LayoutParams(

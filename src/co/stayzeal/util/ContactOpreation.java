@@ -43,12 +43,15 @@ public class ContactOpreation {
 				null, null, null);
 		contactInfos = new ArrayList<ContactInfo>();
 		ContactInfo contactInfo;
+		Cursor dataCursor;
 		while (idCursor.moveToNext()) {
 			contactInfo = new ContactInfo();
 			int id = idCursor.getInt(0);
+			
+			
 			uri = Uri.parse("content://com.android.contacts/contacts/" + id
 					+ "/data");
-			Cursor dataCursor = contentResolver.query(uri, new String[] {
+			dataCursor = contentResolver.query(uri, new String[] {
 					"data1", "mimetype" }, null, null, null);
 			contactInfo.setId(id);
 			// 查询联系人表中的
@@ -64,6 +67,7 @@ public class ContactOpreation {
 				}
 			}
 			contactInfos.add(contactInfo);
+			dataCursor.close();
 		}
 		return contactInfos;
 	}

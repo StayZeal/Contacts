@@ -93,7 +93,6 @@ public class ListFragment extends Fragment {
 			ViewHolder viewHolder;
 			
 			if(convertView==null){
-				System.out.println("convert==null");
 				convertView=mInflater.inflate(R.layout.contact_list_item, null);
 				viewHolder=new ViewHolder();
 				viewHolder.contactIcon=(ImageView) convertView.findViewById(R.id.contactIcon);
@@ -103,8 +102,9 @@ public class ListFragment extends Fragment {
 			}else{
 				viewHolder=(ViewHolder) convertView.getTag();
 			}
-			
-			//viewHolder.contactIcon.setImageResource( dataList.get(position).getContactIcon());
+			if(dataList.get(position).getContactIcon()!=null){
+				viewHolder.contactIcon.setImageResource( dataList.get(position).getContactIcon());
+			}
 			viewHolder.contactName.setText((CharSequence) dataList.get(position).getContactName());
 			viewHolder.contactNumber.setText((CharSequence) dataList.get(position).getContactNumber());
 			

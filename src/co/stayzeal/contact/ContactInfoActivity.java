@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 public class ContactInfoActivity extends Activity {
 	
+	private EditText editName;
 	private EditText editPhone;
 	private EditText editEmail;
 	
@@ -26,6 +27,7 @@ public class ContactInfoActivity extends Activity {
 	}
 	
 	private void init(Context context){
+		editName=(EditText) findViewById(R.id.contactActivityEditName);
 		editPhone=(EditText) findViewById(R.id.contactActivityEditPhone);
 		editEmail=(EditText) findViewById(R.id.contactActivityEditEmail);
 		
@@ -37,6 +39,8 @@ public class ContactInfoActivity extends Activity {
 		String phoneNumber=b.getString("phoneNumber");
 		
 		ContactInfo c=contactOpreation.getContactByPhone(phoneNumber);
+		c.setContactNumber(phoneNumber);
+		editName.setText(c.getContactName());
 		editPhone.setText(c.getContactNumber());
 		editEmail.setText(c.getEamil());
 		
