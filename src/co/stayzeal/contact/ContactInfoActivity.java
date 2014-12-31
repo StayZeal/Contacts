@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
-import android.widget.TextView;
 
 public class ContactInfoActivity extends Activity {
 	
@@ -35,7 +34,7 @@ public class ContactInfoActivity extends Activity {
 		
 		Intent intent=getIntent();
 		Bundle b=intent.getBundleExtra("idBundle");
-		String s=b.getString("id");
+	//	String s=b.getString("id");
 		String phoneNumber=b.getString("phoneNumber");
 		
 		ContactInfo c=contactOpreation.getContactByPhone(phoneNumber);

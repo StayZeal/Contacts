@@ -1,6 +1,8 @@
 package co.stayzeal.contact;
 
 import java.util.List;
+
+import co.stayzeal.contact.menu.NavigateActivity;
 import co.stayzeal.contact.model.ContactInfo;
 import co.stayzeal.util.ContactOpreation;
 import android.annotation.SuppressLint;
@@ -135,7 +137,7 @@ public class ListFragment extends Fragment {
 			idBundle.putString("id",String.valueOf(dataList.get(position).getId()));
 			idBundle.putString("phoneNumber", dataList.get(position).getContactNumber());
 			intent.putExtra("idBundle", idBundle);
-			intent.setClass(getActivity(), ContactInfoActivity.class);	
+			intent.setClass(getActivity(), NavigateActivity.class);	
 			startActivity(intent);
 			
 		}
