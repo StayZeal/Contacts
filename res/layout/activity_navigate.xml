@@ -1,0 +1,130 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+     >
+   
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" 
+        android:layout_weight="1"
+        ></FrameLayout>
+    <LinearLayout
+        android:id="@+id/navigateBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" 
+        android:background="@drawable/bottombar_bg"
+        >
+        
+        <LinearLayout
+            android:id="@+id/contentDial"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/iconDial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:layout_gravity="center"
+                android:background="@drawable/icon_tab_dialer"
+                android:contentDescription="@string/iconDidl"
+                />
+            <TextView
+                android:id="@+id/titleDial"
+                android:layout_width="match_parent"
+                android:layout_height="20dp" 
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/dialTitle"
+                android:textColor="@color/titltTextColor"
+                />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/contentCallLog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/iconCallLog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"  
+                android:layout_gravity="center"
+                android:background="@drawable/icon_tab_calllog"
+                android:contentDescription="@string/iconDidl"
+                />
+            <TextView
+                android:id="@+id/titleCallLog"
+                android:layout_width="match_parent"
+                android:layout_height="20dp" 
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/callLogTitle"
+                android:textColor="@color/titltTextColor"
+                />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/contentContacts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/iconContacts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:layout_gravity="center"
+                android:background="@drawable/icon_tab_contacts"
+                android:contentDescription="@string/iconDidl"
+                />
+            <TextView
+                android:id="@+id/titleContacts"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/contactsTitle"
+                android:textColor="@color/titltTextColor"
+                />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/contentMsg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/iconMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:background="@drawable/icon_tab_msg"
+                android:layout_gravity="center"
+                android:contentDescription="@string/iconDidl"
+                />
+            <TextView
+                android:id="@+id/titleMsg"
+                android:layout_width="match_parent"
+                android:layout_height="20dp" 
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/msgTitle"
+                android:textColor="@color/titltTextColor"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+        
