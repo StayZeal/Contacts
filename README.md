@@ -1,6 +1,6 @@
-Android Contacts List （Android 通讯录）
+Android Contacts List （Android 通讯录）[我的CSDN博客](http://blog.csdn.net/authork)<br />
 ===================================
-  
+		自己闲着无聊，做个通讯录用用，省的没事总备份通讯录，也不用被第三方软件盗取通讯录信息 
 功能模块：
 ---------
 ####1.拨号键盘
@@ -13,7 +13,7 @@ Android Contacts List （Android 通讯录）
 ###1、Fragment 实现菜单栏导航
 ###2、ListView 实现列表显示各种信息
 
-    自己闲着无聊，做个通讯录用用，省的没事总备份通讯录，也不用被第三方软件盗取通讯录信息
+    
 
 ### 单行文本框
     这是一个单行的文本框,只要两个Tab再输入文字即可
@@ -35,7 +35,7 @@ Android Contacts List （Android 通讯录）
    }
 
     }
-[我的CSDN博客](http://blog.csdn.net/authork)<br />
+
 
 ###只是显示图片
 ![github](http://github.com/unicorn.png "github")

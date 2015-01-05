@@ -1,6 +1,8 @@
-package co.stayzeal.contact;
+package co.stayzeal.contact.menu;
 
-import co.stayzeal.contact.menu.FragmentIndicator;
+import co.stayzeal.contact.R;
+import co.stayzeal.contact.R.id;
+import co.stayzeal.contact.R.layout;
 import co.stayzeal.contact.menu.FragmentIndicator.OnIndicateListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,11 +15,11 @@ import android.view.View;
 public class MainActivity extends FragmentActivity  {
 
 	/**
-	 * ¶¯Ì¬Ìí¼ÓFragmentÖ÷Òª·ÖÎª4²½£º
-	 * 1.»ñÈ¡µ½FragmentManager£¬ÔÚActivityÖÐ¿ÉÒÔÖ±½ÓÍ¨¹ýgetFragmentManagerµÃµ½¡£
-	 * 2.¿ªÆôÒ»¸öÊÂÎñ£¬Í¨¹ýµ÷ÓÃbeginTransaction·½·¨¿ªÆô¡£
-	 * 3.ÏòÈÝÆ÷ÄÚ¼ÓÈëFragment£¬Ò»°ãÊ¹ÓÃreplace·½·¨ÊµÏÖ£¬ÐèÒª´«ÈëÈÝÆ÷µÄidºÍFragmentµÄÊµÀý¡£
-	 * 4.Ìá½»ÊÂÎñ£¬µ÷ÓÃcommit·½·¨Ìá½»¡£
+	 * ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½Fragmentï¿½ï¿½Òªï¿½ï¿½Îª4ï¿½ï¿½ï¿½ï¿½
+	 * 1.ï¿½ï¿½È¡ï¿½ï¿½FragmentManagerï¿½ï¿½ï¿½ï¿½Activityï¿½Ð¿ï¿½ï¿½ï¿½Ö±ï¿½ï¿½Í¨ï¿½ï¿½getFragmentManagerï¿½Ãµï¿½ï¿½ï¿½
+	 * 2.ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½beginTransactionï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * 3.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½Fragmentï¿½ï¿½Ò»ï¿½ï¿½Ê¹ï¿½ï¿½replaceï¿½ï¿½ï¿½ï¿½Êµï¿½Ö£ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½idï¿½ï¿½Fragmentï¿½ï¿½Êµï¿½ï¿½
+	 * 4.ï¿½á½»ï¿½ï¿½ï¿½ñ£¬µï¿½ï¿½ï¿½commitï¿½ï¿½ï¿½ï¿½ï¿½á½»ï¿½ï¿½
 	 * getFragmentManager().beginTransaction().replace(R.id.main_layout, fragment1).commit();
 	 */
 	/*private FragmentManager fragmentManger=getFragmentManager();
@@ -31,7 +33,7 @@ public class MainActivity extends FragmentActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.w("main activity :", "oncreate function Ö´ÐÐ");
+        Log.w("main activity :", "oncreate function Ö´ï¿½ï¿½");
         setFragmentIndicator(0);
     }
     
@@ -41,8 +43,8 @@ public class MainActivity extends FragmentActivity  {
         mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.callLogFragement);  
         mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.contactsFragment); 
         mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.messageFragement); 
-        Log.w("main activity :", "main activity»ñÈ¡fragmentÍê±Ï");
-        Log.w("menuÊýÄ¿£º",String.valueOf(mFragments.length));
+        Log.w("main activity :", "main activityï¿½ï¿½È¡fragmentï¿½ï¿½ï¿½");
+        Log.w("menuï¿½ï¿½Ä¿ï¿½ï¿½",String.valueOf(mFragments.length));
         FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
         fragmentTransaction.hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();  
   
@@ -51,7 +53,7 @@ public class MainActivity extends FragmentActivity  {
         mIndicator.setOnIndicateListener(new OnIndicateListener() {  
             @Override  
             public void onIndicate(View v, int which) {  
-            	Log.w("main activity: OnIndicateListener()", "°ó¶¨¼àÌýÆ÷:ÏÔÊ¾Index£º "+which);
+            	Log.w("main activity: OnIndicateListener()", "ï¿½ó¶¨¼ï¿½ï¿½ï¿½ï¿½ï¿½:ï¿½ï¿½Ê¾Indexï¿½ï¿½ "+which);
                 getSupportFragmentManager().beginTransaction()  
                         .hide(mFragments[0]).hide(mFragments[1])  
                         .hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();  

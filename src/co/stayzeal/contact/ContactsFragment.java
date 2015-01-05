@@ -31,7 +31,7 @@ public class ContactsFragment extends Fragment {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Log.w("onCreate", "Ö´ÐÐ");
+		Log.w("onCreate", "Ö´ï¿½ï¿½");
 		super.onCreate(savedInstanceState);
 		
 	}
@@ -39,7 +39,7 @@ public class ContactsFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		Log.w("", "onCreateView()Ö´ÐÐ");
+		Log.w("", "onCreateView()Ö´ï¿½ï¿½");
 		View view=inflater.inflate(R.layout.contacts_fragment,container,false);
 		contactList=(ListView) view.findViewById(R.id.contactListView);
 		init();
@@ -137,7 +137,7 @@ public class ContactsFragment extends Fragment {
 			idBundle.putString("id",String.valueOf(dataList.get(position).getId()));
 			idBundle.putString("phoneNumber", dataList.get(position).getContactNumber());
 			intent.putExtra("idBundle", idBundle);
-			intent.setClass(getActivity(), NavigateActivity.class);	
+			intent.setClass(getActivity(), ContactInfoActivity.class);	
 			startActivity(intent);
 			
 		}
