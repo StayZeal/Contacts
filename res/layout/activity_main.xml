@@ -21,8 +21,8 @@
         />
     
     <fragment 
-        android:id="@+id/listFragment"
-        android:name="co.stayzeal.contact.ListFragment"
+        android:id="@+id/contactsFragment"
+        android:name="co.stayzeal.contact.ContactsFragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"

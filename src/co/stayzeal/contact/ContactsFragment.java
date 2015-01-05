@@ -20,7 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 @SuppressLint("InflateParams")
-public class ListFragment extends Fragment {
+public class ContactsFragment extends Fragment {
 
 	//private Context context;
 	private ListView contactList;
@@ -40,7 +40,7 @@ public class ListFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		Log.w("", "onCreateView()Ö´ÐÐ");
-		View view=inflater.inflate(R.layout.list_fragment,container,false);
+		View view=inflater.inflate(R.layout.contacts_fragment,container,false);
 		contactList=(ListView) view.findViewById(R.id.contactListView);
 		init();
 		return view;

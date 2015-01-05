@@ -39,7 +39,7 @@ public class MainActivity extends FragmentActivity  {
         mFragments = new Fragment[4];  
         mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.dialFragement);  
         mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.callLogFragement);  
-        mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.listFragment); 
+        mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.contactsFragment); 
         mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.messageFragement); 
         Log.w("main activity :", "main activity获取fragment完毕");
         Log.w("menu数目：",String.valueOf(mFragments.length));
