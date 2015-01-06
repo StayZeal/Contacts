@@ -1,9 +1,7 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical" >
     
     <FrameLayout
         android:id="@+id/content"
@@ -39,8 +37,8 @@
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:gravity="center"
-                 android:text="拨号"
-                 android:textColor="#ffffff"
+                 android:text="@string/dialTitle"
+                 android:textColor="@color/titltTextColor"
                 />
         </LinearLayout>
         
@@ -63,8 +61,8 @@
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:gravity="center"
-                 android:text="通话记录"
-                 android:textColor="#ffffff"
+                 android:text="@string/callLogTitle"
+                 android:textColor="@color/titltTextColor"
                 />
         </LinearLayout>
         
@@ -87,8 +85,8 @@
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:gravity="center"
-                 android:text="联系人"
-                 android:textColor="#ffffff"
+                 android:text="@string/contactsTitle"
+                 android:textColor="@color/titltTextColor"
                 />
         </LinearLayout>
         
@@ -112,8 +110,8 @@
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:gravity="center"
-                 android:text="短信"
-                 android:textColor="#ffffff"
+                 android:text="@string/msgTitle"
+                 android:textColor="@color/titltTextColor"
                 />
         </LinearLayout>
     </LinearLayout>

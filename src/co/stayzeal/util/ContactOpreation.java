@@ -15,9 +15,8 @@ import android.net.Uri;
 import android.os.RemoteException;
 
 /**
- * Í¨¹ıContentResolver¶ÔAndroid ÏµÍ³ÖĞµÄcontactÖĞµÄÊı¾İ½øĞĞ²Ù×÷
- * 
- * @author YOUNG
+ * ContentResolveræ“ä½œAndroidæœ¬åœ°contact2æ•°æ®åº“
+ * @author ArthorK
  *
  */
 
@@ -34,9 +33,9 @@ public class ContactOpreation {
 	}
 
 	/**
-	 * »ñÈ¡ËùÓĞµÄÁªÏµÈËĞÅÏ¢
+	 *è·å–æ‰€æœ‰è”ç³»äººä¿¡æ¯
 	 */
-	public List<ContactInfo> getContactList() {
+	public List<ContactInfo> getContactsList() {
 
 		uri = Uri.parse("content://com.android.contacts/contacts");
 		Cursor idCursor = contentResolver.query(uri, new String[] { "_id" },
@@ -54,7 +53,7 @@ public class ContactOpreation {
 			dataCursor = contentResolver.query(uri, new String[] {
 					"data1", "mimetype" }, null, null, null);
 			contactInfo.setId(id);
-			// ²éÑ¯ÁªÏµÈË±íÖĞµÄ
+			//è·å–ä¸€ä¸ªè”ç³»äººçš„æ‰€æœ‰ä¿¡æ¯
 			while (dataCursor.moveToNext()) {
 				String data = dataCursor.getString(0);
 				String type = dataCursor.getString(1);
@@ -69,11 +68,12 @@ public class ContactOpreation {
 			contactInfos.add(contactInfo);
 			dataCursor.close();
 		}
+		idCursor.close();
 		return contactInfos;
 	}
 	
 	/**
-	 * Í¨¹ıµç»°ºÅÂë»ñÈ¡ÁªÏµÈËĞÅÏ¢
+	 * Í¨åŒè¿‡æ‰‹æœºå·ç è·å–è”ç³»äººä¿¡æ¯
 	 * @param phoneNumber
 	 * @return
 	 */
@@ -93,29 +93,29 @@ public class ContactOpreation {
 	
 	
 	/**
-	 * Ìí¼ÓÁªÏµÈËĞÅÏ¢
+	 * æ·»åŠ è”ç³»äºº
 	 * @param contactInfo
 	 */
 	public void addContact(ContactInfo contactInfo){
 		
 		uri=Uri.parse("content://com.android.contacts/raw_contacts");  
 		ContentValues values = new ContentValues();  
-		// Ïòraw_contacts²åÈëÒ»Ìõ³ıÁËIDÖ®Íâ, ÆäËûÈ«²¿ÎªNULLµÄ¼ÇÂ¼, IDÊÇ×Ô¶¯Éú³ÉµÄ  
+		// ï¿½ï¿½raw_contactsï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½IDÖ®ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ÎªNULLï¿½Ä¼ï¿½Â¼, IDï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½Éµï¿½  
 		long id = ContentUris.parseId(contentResolver.insert(uri, values));   
-		//Ìí¼ÓÁªÏµÈËĞÕÃû  
+		//ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
 		uri = Uri.parse("content://com.android.contacts/data");  
 		values.put("raw_contact_id", id);  
 		values.put("data2", contactInfo.getContactName());  
 		values.put("mimetype", "vnd.android.cursor.item/name");  
 		contentResolver.insert(uri, values);  
-		                //Ìí¼ÓÁªÏµÈËµç»°  
-		values.clear(); // Çå¿ÕÉÏ´ÎµÄÊı¾İ  
+		                //ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½Ëµç»°  
+		values.clear(); // ï¿½ï¿½ï¿½ï¿½Ï´Îµï¿½ï¿½ï¿½ï¿½  
 		values.put("raw_contact_id", id);  
 		values.put("data1", contactInfo.getContactNumber());  
 		values.put("data2", "2");  
 		values.put("mimetype", "vnd.android.cursor.item/phone_v2");  
 		contentResolver.insert(uri, values);  
-		//Ìí¼ÓÁªÏµÈËÓÊÏä  
+		//ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
 		values.clear();  
 		values.put("raw_contact_id", id);  
 		values.put("data1", contactInfo.getEamil());  
@@ -125,7 +125,7 @@ public class ContactOpreation {
 	}
 	
 	/**
-	 * Í¨¹ıÊÂÎïÌí¼ÓÁªÏµÈË
+	 *é€šè¿‡transactionæ·»åŠ è”ç³»äºº
 	 * @param contactInfo
 	 * @throws RemoteException
 	 * @throws OperationApplicationException
@@ -166,7 +166,7 @@ public class ContactOpreation {
 	            .build();  
 	    operations.add(operation4);  
 	  
-	    // ÔÚÊÂÎñÖĞ¶Ô¶à¸ö²Ù×÷ÅúÁ¿Ö´ĞĞ  
+	    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¶Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½  
 	    contentResolver.applyBatch("com.android.contacts", operations);
 	}
 	

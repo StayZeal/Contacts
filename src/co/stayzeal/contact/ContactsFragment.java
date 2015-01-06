@@ -4,6 +4,7 @@ import java.util.List;
 
 import co.stayzeal.contact.menu.NavigateActivity;
 import co.stayzeal.contact.model.ContactInfo;
+import co.stayzeal.util.ContactDBOperaion;
 import co.stayzeal.util.ContactOpreation;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -31,7 +32,6 @@ public class ContactsFragment extends Fragment {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Log.w("onCreate", "ִ��");
 		super.onCreate(savedInstanceState);
 		
 	}
@@ -39,7 +39,6 @@ public class ContactsFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		Log.w("", "onCreateView()ִ��");
 		View view=inflater.inflate(R.layout.contacts_fragment,container,false);
 		contactList=(ListView) view.findViewById(R.id.contactListView);
 		init();
@@ -58,8 +57,9 @@ public class ContactsFragment extends Fragment {
 	private void getData(){
 		Log.w(this.getClass().getName()+" getData()", "start");
 		//dataList=new ArrayList<ContactInfo>();
-		ContactOpreation con=new ContactOpreation(getActivity());
-		dataList=con.getContactList();
+		//ContactOpreation con=new ContactOpreation(getActivity());
+		ContactDBOperaion con=new ContactDBOperaion(getActivity());
+		dataList=con.getContactsList();
 		Log.w(this.getClass().getName()+" getData()", "end");
 	}
 	

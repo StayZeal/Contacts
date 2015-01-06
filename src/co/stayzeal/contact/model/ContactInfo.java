@@ -9,6 +9,7 @@ public class ContactInfo {
 	private String address;
 	private String eamil;
 	private String relation;
+	private String sortKey;
 	
 	public int getId() {
 		return id;
@@ -52,6 +53,12 @@ public class ContactInfo {
 	}
 	public void setRelation(String relation) {
 		this.relation = relation;
+	}
+	public String getSortKey() {
+		return sortKey;
+	}
+	public void setSortKey(String sortKey) {
+		this.sortKey = sortKey;
 	}
 	
 	
