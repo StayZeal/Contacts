@@ -9,7 +9,9 @@ public class ContactInfo {
 	private String address;
 	private String eamil;
 	private String relation;
+	//排序方式
 	private String sortKey;
+	private String provinceCity;
 	
 	public int getId() {
 		return id;
@@ -59,6 +61,12 @@ public class ContactInfo {
 	}
 	public void setSortKey(String sortKey) {
 		this.sortKey = sortKey;
+	}
+	public String getProvinceCity() {
+		return provinceCity;
+	}
+	public void setProvinceCity(String provinceCity) {
+		this.provinceCity = provinceCity;
 	}
 	
 	

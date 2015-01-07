@@ -6,10 +6,12 @@
     android:background="#00dd00"
      >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:text="通话记录页面" />
+    <ListView 
+        android:id="@+id/call_log_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        
+    </ListView>
 
 </LinearLayout>

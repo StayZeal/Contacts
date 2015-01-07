@@ -2,10 +2,8 @@ package co.stayzeal.contact;
 
 import java.util.List;
 
-import co.stayzeal.contact.menu.NavigateActivity;
 import co.stayzeal.contact.model.ContactInfo;
 import co.stayzeal.util.ContactDBOperaion;
-import co.stayzeal.util.ContactOpreation;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
