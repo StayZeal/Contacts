@@ -5,6 +5,7 @@ import java.util.List;
 import org.w3c.dom.Text;
 
 import co.stayzeal.contact.R;
+import co.stayzeal.contact.constant.MyColor;
 import co.stayzeal.contact.model.CallLogInfo;
 import co.stayzeal.util.CallLogOperation;
 import co.stayzeal.util.DateFormatUtil;
@@ -43,6 +44,7 @@ public class CallLogFragment extends Fragment {
 		
 		CallLogOperation c=new CallLogOperation(getActivity());
 	    callList= c.getCallLogList();
+	    
 		myAdapter=new MyAdapter(getActivity());
 		listView.setAdapter(myAdapter);
 		
@@ -95,7 +97,20 @@ public class CallLogFragment extends Fragment {
 			}
 			viewHolder.callDate.setText(DateFormatUtil.toYyMmDd(callList.get(position).getCallDate(), "yy/mm/dd"));
 			//viewHolder.callType.setText(callList.get(position).getCallType());
-			//viewHolder.provinceAndCity.setText(callList.get(position).getCallType());
+			String callType="";
+			switch (callList.get(position).getCallType()) {
+			case 1:
+				callType="未接";
+				viewHolder.nameOrNumber.setTextColor(MyColor.COLOR_CONTACT_PHONE_UN_RECEIVE);
+				viewHolder.provinceAndCity.setTextColor(MyColor.COLOR_CONTACT_PHONE_UN_RECEIVE);
+				break;
+			case 2:
+				callType="已接";
+				break;
+			default:
+				break;
+			}
+			viewHolder.provinceAndCity.setText(callType);
 			return convertView;
 		}
 		
