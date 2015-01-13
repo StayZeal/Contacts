@@ -19,11 +19,10 @@ Android Contacts List （Android 通讯录）[我的CSDN博客](http://blog.csdn
 ### 短信模块
     短息模块包括短信和彩信，分别对应SMS和MMS数据库。
         
-#### 多行文本框  
-    这是一个有多行的文本框
-    你可以写入代码等,每行文字只要输入两个Tab再输入文字即可
-    这里你可以输入一段代码
-
+#### 短息功能：  
+ 1.获取sms
+ 2.获取 mms
+    
 ### 比如我们可以在多行文本框里输入一段代码,来一个Java版本的HelloWorld吧
     public class HelloWorld {
 
