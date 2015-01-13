@@ -66,14 +66,11 @@ public class ContactsFragment extends Fragment {
 		private LayoutInflater mInflater;
 		
 		public MyAdapter() {
-			System.out.println("MyAdapter() start!!!!!!!!!");
 		    this.mInflater=LayoutInflater.from(getActivity());
-		    System.out.println("MyAdapter() end!!!!!!!!!");
 		}
 
 		@Override
 		public int getCount() {
-			System.out.println("getCount() start!!!!!!!!! "+dataList.size());
 			return dataList.size();
 		}
 
@@ -89,7 +86,7 @@ public class ContactsFragment extends Fragment {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			Log.w(getClass().getName()+" getView(): ", "start");
+			
 			ViewHolder viewHolder;
 			
 			if(convertView==null){

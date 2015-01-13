@@ -5,10 +5,13 @@ import java.util.List;
 import co.stayzeal.contact.model.SmsInfo;
 import co.stayzeal.util.SmsOperation;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Telephony.Sms;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 
 /**
  * 短信息Fragment
+ * ？从sms表中读取信息，需要和联系人的名字对应起来的时候，查询速度 有点慢。
  * @author ArthorK
  *
  */
@@ -39,13 +43,18 @@ public class MessageFragment extends Fragment {
 	
 	public void init(){
 		smsOperation=new SmsOperation(getActivity());
-		smsList=smsOperation.getSmsInfoList();
-		for (SmsInfo smsInfo : smsList) {
+		//smsList=smsOperation.getSmsInfoList();
+		smsList=smsOperation.getThreads(0);
+		/*for (SmsInfo smsInfo : smsList) {
 			System.out.println(smsInfo.getAddress());
 			System.out.println(smsInfo.getBody());
 			System.out.println(smsInfo.getPerson());
-		}
-		myAdapter=new MyAdapter(getActivity());
+		}*/
+		List<SmsInfo> dataSource=smsOperation.getThreadNum(smsList);
+		/*for (SmsInfo smsInfo : dataSource) {
+			System.out.println("Thread Id: "+smsInfo.getThreadId());
+		}*/
+		myAdapter=new MyAdapter(getActivity(),dataSource);
 		msgListView.setAdapter(myAdapter);
 	}
 	
@@ -55,29 +64,33 @@ public class MessageFragment extends Fragment {
 		TextView msgShort;   //短信简要
 	}
 	
+	/**
+	 * 自定义适配器
+	 * @author ArthorK
+	 *
+	 */
 	private class MyAdapter  extends BaseAdapter{
 
 		private Context context;
+		private List<SmsInfo> dataSource;
 		
-		public MyAdapter(Context context) {
+		public MyAdapter(Context context,List<SmsInfo> dataSource) {
 			this.context=context;
+			this.dataSource=dataSource;
 		}
 		
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
-			return smsList.size();
+			return dataSource.size();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
 			return position;
 		}
 
 		@Override
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
 			return position;
 		}
 
@@ -95,10 +108,42 @@ public class MessageFragment extends Fragment {
 				viewHolder=(ViewHolder) convertView.getTag();
 			}
 			viewHolder.msgIcon.setBackgroundResource(R.drawable.xiaoxin);
-			viewHolder.msgShort.setText(smsList.get(position).getBody());
-			viewHolder.nameOrPhone.setText(smsList.get(position).getAddress());
+			viewHolder.msgShort.setText(dataSource.get(position).getSnippe());
+			viewHolder.nameOrPhone.setText(dataSource.get(position).getContactName()+" "+dataSource.get(position).getAddress()+"--"+dataSource.get(position).getMsgCount());
+			
+			/**
+			 * 设置监听器
+			 */
+			convertView.setOnClickListener(new MsgItemClickListener(dataSource.get(position)));
+			
 			return convertView;
 		}
 		
 	}
+	
+	private class MsgItemClickListener implements OnClickListener{
+		private SmsInfo smsInfo;
+		
+		public MsgItemClickListener(SmsInfo smsInfo){
+			this.smsInfo=smsInfo;
+		}
+		
+		@Override
+		public void onClick(View v) {
+			Intent intent =new Intent();
+			Bundle bundle=new Bundle();
+			if(smsInfo!=null){
+				bundle.putString("address", smsInfo.getAddress());
+				bundle.putString("threadId", smsInfo.getThreadId());
+			}else{
+				System.out.println("MsgItemClickListener smsInfo 为Null");
+			}
+			
+			intent.putExtra("bundle", bundle);
+			intent.setClass(getActivity(), ShowMsg.class);
+			startActivity(intent);
+		}
+		
+	}
+
 }

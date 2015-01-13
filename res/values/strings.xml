@@ -15,5 +15,6 @@
     <string name="iconContacts">联系人Icon</string>
     <string name="iconMessage">短信Icon</string>
     <string name="title_activity_navigation_bar">NavigationBarActivity</string>
+    <string name="title_activity_show_msg">ShowMsg</string>
 
 </resources>

@@ -46,6 +46,7 @@ public class ContactDBOperaion {
 					contact.setContactNumber(cursor.getString(cursor
 							.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
 					contact.setSortKey(getSortKey(cursor.getString(1)));
+					
 					contactInfos.add(contact);
 				} while (cursor.moveToNext());
 			}
