@@ -1,16 +1,8 @@
 package co.stayzeal.contact;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-
-
-
-
-import org.w3c.dom.Text;
-
 import co.stayzeal.contact.model.SmsInfo;
 import co.stayzeal.util.DateFormatUtil;
 import android.annotation.SuppressLint;
@@ -26,12 +18,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 /**
  * http://blog.csdn.net/wwj_748/article/details/19984941
- * @author YOUNG
+ * @author ArthorK
  *
  */
 public class ShowMsg extends Activity {
@@ -39,10 +30,6 @@ public class ShowMsg extends Activity {
 	private ListView msgConListView;
 	private List<SmsInfo> dataSource;
 	private AsyncQueryHandler asyncQuery;  
-	private String address;  
-	private LinearLayout layout_child;  
-	private TextView tvDate;  
-	private TextView tvText;
 	private MyAdapter myAdapter;
 	
 	@Override
@@ -78,8 +65,9 @@ public class ShowMsg extends Activity {
 //		}
         myAdapter=new MyAdapter(this, dataSource);
         msgConListView.setAdapter(myAdapter);
+        System.out.println(dataSource.size());
 for (SmsInfo s : dataSource) {
-			
+			System.out.println("test");
 			if (s.getType()==1) {
 				System.out.println("收到："+s.getBody());
 			}else  if(s.getType()==2){
@@ -139,8 +127,9 @@ for (SmsInfo s : dataSource) {
 			}
 			
 			viewHolder.msgBody.setText(dataSource.get(position).getBody());
-			viewHolder.msgDate.setText(DateFormatUtil.toYyMmDd(dataSource.get(position).getDate(),"yy-mm-dd"));
-			
+			viewHolder.msgDate.setText(DateFormatUtil.toYyMmDd(dataSource.get(position).getDate(),"yy-MM-dd"));
+			System.out.println(dataSource.size());
+			System.out.println(dataSource.get(position).getDate()+": "+DateFormatUtil.toYyMmDd(dataSource.get(position).getDate(),"yy-MM-dd"));
 			return convertView;
 		}
 		

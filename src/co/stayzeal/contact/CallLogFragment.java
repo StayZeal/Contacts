@@ -95,7 +95,7 @@ public class CallLogFragment extends Fragment {
 			}else{
 				viewHolder.nameOrNumber.setText(callList.get(position).getPhone());
 			}
-			viewHolder.callDate.setText(DateFormatUtil.toYyMmDd(callList.get(position).getCallDate(), "yy/mm/dd"));
+			viewHolder.callDate.setText(DateFormatUtil.toYyMmDd(callList.get(position).getCallDate(), "yy/MM/dd"));
 			//viewHolder.callType.setText(callList.get(position).getCallType());
 			String callType="";
 			switch (callList.get(position).getCallType()) {
