@@ -106,6 +106,8 @@ public class CallLogFragment extends Fragment {
 				break;
 			case 2:
 				callType="已接";
+				viewHolder.nameOrNumber.setTextColor(MyColor.COLOR_CONTACT_PHONE);
+				viewHolder.provinceAndCity.setTextColor(MyColor.COLOR_CONTACT_PHONE);
 				break;
 			default:
 				break;

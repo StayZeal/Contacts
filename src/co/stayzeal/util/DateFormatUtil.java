@@ -18,11 +18,11 @@ public class DateFormatUtil {
 	/**
 	 * 格式化成年月日的形式
 	 * @param date
-	 * @param outType "yy-mm-dd" or "yy/mm/dd"
+	 * @param outType "yy-MM-dd" or "yy/MM/dd"
 	 * @return
 	 */
 	public static String toYyMmDd(Date date,String outType){
-		
+		//formater=(SimpleDateFormat) SimpleDateFormat.getDateInstance();
 		formater=new SimpleDateFormat(outType);
 		
 		return formater.format(date);
