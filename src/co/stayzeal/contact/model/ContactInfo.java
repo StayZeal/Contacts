@@ -1,17 +1,21 @@
 package co.stayzeal.contact.model;
 
+import android.graphics.Bitmap;
+
 public class ContactInfo {
 	
 	private int id;
 	private String contactName;
 	private String contactNumber;
-	private Integer contactIcon;
+	private Bitmap contactIcon;
+	//private Integer contactIcon;
 	private String address;
 	private String eamil;
 	private String relation;
 	//排序方式
 	private String sortKey;
 	private String provinceCity;
+	private String namePinYin;
 	
 	public int getId() {
 		return id;
@@ -32,12 +36,7 @@ public class ContactInfo {
 		this.contactNumber = contactNumber;
 	}
 	
-	public Integer getContactIcon() {
-		return contactIcon;
-	}
-	public void setContactIcon(Integer contactIcon) {
-		this.contactIcon = contactIcon;
-	}
+	 
 	public String getAddress() {
 		return address;
 	}
@@ -67,6 +66,18 @@ public class ContactInfo {
 	}
 	public void setProvinceCity(String provinceCity) {
 		this.provinceCity = provinceCity;
+	}
+	public String getNamePinYin() {
+		return namePinYin;
+	}
+	public void setNamePinYin(String namePinYin) {
+		this.namePinYin = namePinYin;
+	}
+	public Bitmap getContactIcon() {
+		return contactIcon;
+	}
+	public void setContactIcon(Bitmap contactIcon) {
+		this.contactIcon = contactIcon;
 	}
 	
 	

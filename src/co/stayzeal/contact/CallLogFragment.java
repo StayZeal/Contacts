@@ -2,7 +2,6 @@ package co.stayzeal.contact;
 
 import java.util.List;
 
-import org.w3c.dom.Text;
 
 import co.stayzeal.contact.R;
 import co.stayzeal.contact.constant.MyColor;

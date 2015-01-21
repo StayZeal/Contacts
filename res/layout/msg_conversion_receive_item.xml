@@ -33,7 +33,7 @@
             android:id="@+id/msg_receive_row_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_gravity="center_horizontal"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#65879e" />
     </LinearLayout>

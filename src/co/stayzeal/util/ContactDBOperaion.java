@@ -1,22 +1,29 @@
 package co.stayzeal.util;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.CommonDataKinds.Photo;
+import android.provider.ContactsContract.Contacts;
+import android.support.v4.print.PrintHelper;
 import co.stayzeal.contact.model.ContactInfo;
 
 /**
- * 
  * ContactOperation改进版本。
  * 1.添加了按联系人排序的功能
  * 发现：加载速度比ContactOperation.class 速度快。
  * @author ArthorK
- *
  */
 public class ContactDBOperaion {
 
@@ -32,16 +39,29 @@ public class ContactDBOperaion {
 		Cursor cursor = null;
 		try {
 			Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+			//Uri uri1=ContactsContract.Data.CONTENT_URI;
 			// 这里是获取联系人表的电话里的信息 包括：名字，名字拼音，联系人id,电话号码；
 			// 然后在根据"sort-key"排序
 			cursor = contentResolver
 					.query(uri, new String[] { "display_name", "sort_key",
-							"contact_id", "data1" }, null, null, "sort_key");
+							"contact_id", "data1",Phone.PHOTO_ID }, null, null, "sort_key");
+			Long photoId;//联系人头像
+			Bitmap contactIcon=null;
 			if (cursor.moveToFirst()) {
 				do {
 					ContactInfo contact = new ContactInfo();
 					contact.setId(cursor.getInt(cursor
 							.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)));
+					photoId=cursor.getLong(cursor.getColumnIndex(Phone.PHOTO_ID));
+					if(photoId>0){
+//						Uri uri =ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI,contactid);
+//	                    InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(resolver, uri);
+						Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI,contact.getId());;
+						InputStream is=Contacts.openContactPhotoInputStream(contentResolver, contactUri);
+						contactIcon=BitmapFactory.decodeStream(is);
+						contact.setContactIcon(contactIcon);
+					}
+					System.out.println("contactDbOperation: "+contact.getContactIcon());
 					contact.setContactName(cursor.getString(0));
 					contact.setContactNumber(cursor.getString(cursor
 							.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));

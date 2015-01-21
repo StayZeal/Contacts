@@ -99,8 +99,13 @@ public class ContactsFragment extends Fragment {
 			}else{
 				viewHolder=(ViewHolder) convertView.getTag();
 			}
+			/**
+			 * 如果有头像则显示，没有怎么置null
+			 */
 			if(dataList.get(position).getContactIcon()!=null){
-				viewHolder.contactIcon.setImageResource( dataList.get(position).getContactIcon());
+				viewHolder.contactIcon.setImageBitmap(dataList.get(position).getContactIcon());;
+			}else{
+				viewHolder.contactIcon.setImageBitmap(null);
 			}
 			viewHolder.contactName.setText((CharSequence) dataList.get(position).getContactName());
 			viewHolder.contactNumber.setText((CharSequence) dataList.get(position).getContactNumber());

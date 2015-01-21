@@ -42,7 +42,7 @@ public class CallLogOperation {
 				CallLog.Calls._ID, // id
 				CallLog.Calls.DURATION };
 		Cursor cursor = context.getContentResolver().query(uri, projection,
-				null, null, null);
+				null, null, "date desc");
 		if (cursor.moveToFirst()) {
 			do {
 				CallLogInfo callLogInfo = new CallLogInfo();
@@ -87,7 +87,7 @@ public class CallLogOperation {
 	        }; 
 	        String selection="CallLog.Calls.NUMBER=?";
 	        String[] selectionArgs={phone};
-	        String sortOrder=null;
+	        String sortOrder="date desc";
 		 Cursor cursor=context.getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder);
 		 do{
 			 CallLogInfo callLogInfo=new CallLogInfo();

@@ -44,30 +44,19 @@ public class ShowMsg extends Activity {
 		msgConListView=(ListView) findViewById(R.id.msg_conversation_list);
 		dataSource=new ArrayList<SmsInfo>();
 		viewTypeList=new ArrayList<Integer>();
-		asyncQuery=new MessageAsynQueryHandler(getContentResolver());
+		asyncQuery=new MsgAsynQueryHandler(getContentResolver());
 		Uri uri = Uri.parse("content://sms");  
 		Intent intent=getIntent();
 		Bundle b=intent.getBundleExtra("bundle");
 		String threadId=b.getString("threadId");
-        String[] projection = new String[] { "date", "address", "person",  
-                "body", "type" }; // 查询的列  
+        String[] projection = new String[] { "date", "address", "person","body", "type" }; // 查询的列  
         
-        asyncQuery.startQuery(0, null, uri, projection,  
-                "thread_id = " + threadId, null, "date asc"); 
+        asyncQuery.startQuery(0, null, uri, projection,"thread_id = " + threadId, null, "date asc"); 
  
         myAdapter=new MsgConversationAdapter(this, dataSource,viewTypeList,2);
         msgConListView.setAdapter(myAdapter);
         System.out.println("init dataSource size : "+dataSource.size());
-for (SmsInfo s : dataSource) {
-			System.out.println("test");
-			if (s.getType()==1) {
-				System.out.println("收到："+s.getBody());
-			}else  if(s.getType()==2){
-				System.out.println("发出："+s.getBody());
-			}else{
-				System.out.println(s.getType());
-			}
-		}
+ 
 	}
 	/**
 	 * 通过dataSource中的type来，设置viewTypeList：因为getItemViewType (int position)
@@ -86,9 +75,9 @@ for (SmsInfo s : dataSource) {
 				break;
 			}
 		}
-		for(Integer i:viewTypeList){
-			System.out.println("getViewTypeList: "+i);
-		}
+//		for(Integer i:viewTypeList){
+//			System.out.println("getViewTypeList: "+i);
+//		}
 	}
 	
 	
@@ -100,9 +89,9 @@ for (SmsInfo s : dataSource) {
 	 *
 	 */
     @SuppressLint("HandlerLeak")
-	private class MessageAsynQueryHandler extends AsyncQueryHandler {  
+	private class MsgAsynQueryHandler extends AsyncQueryHandler {  
   
-		public MessageAsynQueryHandler(ContentResolver cr) {  
+		public MsgAsynQueryHandler(ContentResolver cr) {  
             super(cr);  
         }  
   
