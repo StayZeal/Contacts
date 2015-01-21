@@ -33,6 +33,10 @@ public class ContactDBOperaion {
 		this.contentResolver = context.getContentResolver();
 	}
 
+	/**
+	 * 获取手机中的联系人
+	 * @return
+	 */
 	public List<ContactInfo> getContactsList() {
 
 		List<ContactInfo> contactInfos = new ArrayList<ContactInfo>();
@@ -53,9 +57,10 @@ public class ContactDBOperaion {
 					contact.setId(cursor.getInt(cursor
 							.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)));
 					photoId=cursor.getLong(cursor.getColumnIndex(Phone.PHOTO_ID));
+					/**
+					 * 如果photoId>0说明有头像
+					 */
 					if(photoId>0){
-//						Uri uri =ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI,contactid);
-//	                    InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(resolver, uri);
 						Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI,contact.getId());;
 						InputStream is=Contacts.openContactPhotoInputStream(contentResolver, contactUri);
 						contactIcon=BitmapFactory.decodeStream(is);
@@ -76,6 +81,30 @@ public class ContactDBOperaion {
 			cursor.close();
 		}
 
+		return contactInfos;
+	}
+	
+	/**
+	 * 获取sim卡中的联系人
+	 * @return
+	 */
+	public List<ContactInfo> getSIMContactList(){
+		List<ContactInfo> contactInfos = new ArrayList<ContactInfo>();
+	        // 获取Sims卡联系人
+	        Uri uri = Uri.parse("content://icc/adn");
+	        Cursor cursor = contentResolver.query(uri,new String[]{Phone.CONTACT_ID}, null	, null, null);
+	        if (cursor != null) {
+	            while (cursor.moveToNext()) {
+
+	            	ContactInfo contact=new ContactInfo();
+	                // 得到手机号码
+	            	contact.setContactNumber(cursor.getString(0));
+	            	contactInfos.add(contact);
+	            }
+
+	            cursor.close();
+	        }
+		
 		return contactInfos;
 	}
 	
