@@ -20,7 +20,7 @@ public class SmsOperation {
 
 	private Context context;
 	private List<SmsInfo> smsList;
-	private Uri uri;
+	//private Uri uri;
 
 	/**
 	 * 为了兼容以前的版本，只能采用这种方法
@@ -32,14 +32,14 @@ public class SmsOperation {
 	public static final String CONTENT_URI_SMS_CONVERSATIONS = "content://sms/conversations";
 	
 	public static String[] SMS_COLUMNS = new String[] { "_id", // 0  
-        "thread_id", // 1  
-        "address", // 2  
-        "person", // 3  
-        "date", // 4  
-        "body", // 5  
-        "read", // 6; 0:not read 1:read; default is 0  
-        "type", // 7; 0:all 1:inBox 2:sent 3:draft 4:outBox 5:failed  
-                // 6:queued  
+        "thread_id",  // 1  
+        "address",    // 2  
+        "person",     // 3  
+        "date",       // 4  
+        "body",       // 5  
+        "read",       // 6; 0:not read 1:read; default is 0  
+        "type",       // 7; 0:all 1:inBox 2:sent 3:draft 4:outBox 5:failed  
+                      // 6:queued  
         "service_center" // 8
         };  
 

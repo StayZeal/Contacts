@@ -26,6 +26,8 @@ import android.widget.TextView;
  */
 public class MessageFragment extends Fragment {
 
+	private String TITLE_NAME="短信";
+	
 	private SmsOperation smsOperation;
 	private List<SmsInfo> smsList;
 	private ListView msgListView;
@@ -41,6 +43,9 @@ public class MessageFragment extends Fragment {
 	}
 	
 	public void init(){
+		
+		getActivity().setTitle(TITLE_NAME);
+		
 		smsOperation=new SmsOperation(getActivity());
 		//smsList=smsOperation.getSmsInfoList();
 		smsList=smsOperation.getThreads(0);

@@ -21,6 +21,8 @@ import android.widget.TextView;
 @SuppressLint("InflateParams")
 public class ContactsFragment extends Fragment {
 
+	
+	private String TITLE_NAME="联系人";
 	//private Context context;
 	private ListView contactList;
 	private List<ContactInfo> dataList;
@@ -45,7 +47,7 @@ public class ContactsFragment extends Fragment {
 	
 	private void init(){
 		Log.w(getClass().getName()+" init(): ", "start");
-		
+		getActivity().setTitle(TITLE_NAME);
 		getData();
 		myAdapter=new MyAdapter();
 		contactList.setAdapter(myAdapter);
@@ -105,7 +107,7 @@ public class ContactsFragment extends Fragment {
 			if(dataList.get(position).getContactIcon()!=null){
 				viewHolder.contactIcon.setImageBitmap(dataList.get(position).getContactIcon());;
 			}else{
-				viewHolder.contactIcon.setImageBitmap(null);
+				viewHolder.contactIcon.setImageResource(R.drawable.contact_avatar_default_nor);;
 			}
 			viewHolder.contactName.setText((CharSequence) dataList.get(position).getContactName());
 			viewHolder.contactNumber.setText((CharSequence) dataList.get(position).getContactNumber());

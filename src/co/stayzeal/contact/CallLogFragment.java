@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 public class CallLogFragment extends Fragment {
 	
+	private String TITLE_NAME="通话记录";
 	private MyAdapter myAdapter;
 	private ListView listView;
 	private List<CallLogInfo> callList;
@@ -36,6 +37,21 @@ public class CallLogFragment extends Fragment {
 		
 	}
 	
+	@Override
+	public void onResume() {
+		System.out.println(getClass().getName().toString()+"onResume()--->start");
+		super.onResume();
+	}
+	
+	
+
+	@Override
+	public void onStart() {
+		System.out.println(getClass().getName().toString()+"onStart()--->start");
+		getActivity().setTitle(TITLE_NAME);
+		super.onStart();
+	}
+
 	public void init(){
 		
 		
@@ -97,16 +113,22 @@ public class CallLogFragment extends Fragment {
 			viewHolder.callDate.setText(DateFormatUtil.toYyMmDd(callList.get(position).getCallDate(), "yy/MM/dd"));
 			//viewHolder.callType.setText(callList.get(position).getCallType());
 			String callType="";
+			System.out.println("电话类型"+callList.get(position).getCallType());
 			switch (callList.get(position).getCallType()) {
 			case 1:
+				callType="已接";
+				viewHolder.nameOrNumber.setTextColor(MyColor.COLOR_CONTACT_PHONE);
+				viewHolder.provinceAndCity.setTextColor(MyColor.COLOR_CONTACT_PHONE );
+				break;
+			case 2:
+				callType="已拨";
+				viewHolder.nameOrNumber.setTextColor(MyColor.COLOR_CONTACT_PHONE);
+				viewHolder.provinceAndCity.setTextColor(MyColor.COLOR_CONTACT_PHONE);
+				break;
+			case 3:
 				callType="未接";
 				viewHolder.nameOrNumber.setTextColor(MyColor.COLOR_CONTACT_PHONE_UN_RECEIVE);
 				viewHolder.provinceAndCity.setTextColor(MyColor.COLOR_CONTACT_PHONE_UN_RECEIVE);
-				break;
-			case 2:
-				callType="已接";
-				viewHolder.nameOrNumber.setTextColor(MyColor.COLOR_CONTACT_PHONE);
-				viewHolder.provinceAndCity.setTextColor(MyColor.COLOR_CONTACT_PHONE);
 				break;
 			default:
 				break;

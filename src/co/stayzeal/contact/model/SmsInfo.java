@@ -24,7 +24,7 @@ public class SmsInfo {
 	private String serviceCenter;//短信服务中心号码编号。如+8613800755500
 	private String snippe;//短信的前45个字符
 	private int msgCount;//每个回话的短消息数
-	private int layoutType;//记录layout的类型
+//	private int layoutType;//记录layout的类型
 	
 	public SmsInfo(){
 		

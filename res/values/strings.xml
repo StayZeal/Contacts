@@ -17,5 +17,6 @@
     <string name="title_activity_navigation_bar">NavigationBarActivity</string>
     <string name="title_activity_show_msg">ShowMsg</string>
     <string name="title_activity_call_log_detail">CallLogDetailActivity</string>
+    <string name="title_activity_sent_msg">SentMsgActivity</string>
 
 </resources>

@@ -8,10 +8,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class ContactInfoActivity extends Activity {
 	
-	private EditText editName;
+	private String TITLE_NAME="联系人详情";
+	
+	private TextView textName;
 	private EditText editPhone;
 	private EditText editEmail;
 	
@@ -26,9 +29,12 @@ public class ContactInfoActivity extends Activity {
 	}
 	
 	private void init(Context context){
-		editName=(EditText) findViewById(R.id.contactActivityEditName);
-		editPhone=(EditText) findViewById(R.id.contactActivityEditPhone);
-		editEmail=(EditText) findViewById(R.id.contactActivityEditEmail);
+		
+		setTitle(TITLE_NAME);
+		
+		textName= (TextView) findViewById(R.id.contact_activity_name);
+		editPhone=(EditText) findViewById(R.id.contact_activity_eidt_phone_1);
+		editEmail=(EditText) findViewById(R.id.contact_activity_edit_email);
 		
 		contactOpreation=new ContactOpreation(context);
 		
@@ -39,7 +45,7 @@ public class ContactInfoActivity extends Activity {
 		
 		ContactInfo c=contactOpreation.getContactByPhone(phoneNumber);
 		c.setContactNumber(phoneNumber);
-		editName.setText(c.getContactName());
+		textName.setText(c.getContactName());
 		editPhone.setText(c.getContactNumber());
 		editEmail.setText(c.getEamil());
 		

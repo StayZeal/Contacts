@@ -1,5 +1,6 @@
 package co.stayzeal.util;
 
+import android.annotation.SuppressLint;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -21,6 +22,7 @@ public class DateFormatUtil {
 	 * @param outType "yy-MM-dd" or "yy/MM/dd"
 	 * @return
 	 */
+	@SuppressLint("SimpleDateFormat")
 	public static String toYyMmDd(Date date,String outType){
 		//formater=(SimpleDateFormat) SimpleDateFormat.getDateInstance();
 		formater=new SimpleDateFormat(outType);

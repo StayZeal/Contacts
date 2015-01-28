@@ -14,9 +14,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.provider.ContactsContract.CommonDataKinds.Photo;
 import android.provider.ContactsContract.Contacts;
-import android.support.v4.print.PrintHelper;
 import co.stayzeal.contact.model.ContactInfo;
 
 /**
@@ -80,7 +78,6 @@ public class ContactDBOperaion {
 		} finally {//使用之后要关闭
 			cursor.close();
 		}
-
 		return contactInfos;
 	}
 	
