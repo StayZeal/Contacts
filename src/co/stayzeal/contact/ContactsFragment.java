@@ -137,9 +137,11 @@ public class ContactsFragment extends Fragment {
 			Intent intent=new Intent();
 			Bundle idBundle=new Bundle();
 			idBundle.putString("id",String.valueOf(dataList.get(position).getId()));
-			idBundle.putString("phoneNumber", dataList.get(position).getContactNumber());
+			idBundle.putString("address", dataList.get(position).getContactNumber());
+			idBundle.putString("name", dataList.get(position).getContactName());
 			intent.putExtra("idBundle", idBundle);
-			intent.setClass(getActivity(), ContactInfoActivity.class);	
+			//intent.setClass(getActivity(), ContactInfoActivity.class);
+			intent.setClass(getActivity(), ShowContactActivity.class);
 			startActivity(intent);
 			
 		}

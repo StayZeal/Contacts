@@ -114,7 +114,12 @@ public class MessageFragment extends Fragment {
 			viewHolder.msgIcon.setBackgroundResource(R.drawable.xiaoxin);
 			viewHolder.msgShort.setText(dataSource.get(position).getSnippe());
 System.out.println(dataSource.get(position).getSnippe());
-			viewHolder.nameOrPhone.setText(dataSource.get(position).getContactName()+" "+dataSource.get(position).getAddress()+"--"+dataSource.get(position).getMsgCount());
+            if(dataSource.get(position).getContactName()!=null){
+            	viewHolder.nameOrPhone.setText(dataSource.get(position).getContactName());
+            }else{
+            	viewHolder.nameOrPhone.setText(dataSource.get(position).getAddress());
+            }
+			//viewHolder.nameOrPhone.setText(dataSource.get(position).getContactName()+" "+dataSource.get(position).getAddress()+"--"+dataSource.get(position).getMsgCount());
 			
 			/**
 			 * 设置监听器

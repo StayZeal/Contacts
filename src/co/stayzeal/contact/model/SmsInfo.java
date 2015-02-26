@@ -114,6 +114,10 @@ public class SmsInfo {
 	public void setServiceCenter(String serviceCenter) {
 		this.serviceCenter = serviceCenter;
 	}
+	/**
+	 * 短信的前45个字符
+	 * @return
+	 */
 	public String getSnippe() {
 		return snippe;
 	}

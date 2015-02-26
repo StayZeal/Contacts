@@ -61,6 +61,14 @@
             android:name=".SentMsgActivity"
             android:label="@string/title_activity_sent_msg" >
         </activity>
+        <activity
+            android:name=".ShowContactActivity"
+            android:label="@string/title_activity_show_contact" >
+        </activity>
+        <activity
+            android:name=".EditContactActivity"
+            android:label="@string/title_activity_edit_contact" >
+        </activity>
     </application>
 
 </manifest>

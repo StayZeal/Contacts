@@ -85,7 +85,7 @@ public class ContactOpreation {
 				null, null, null);
 		while (c.moveToNext()) {
 			contactInfo.setContactName(c.getString(0));
-			System.out.println("getContactByPhone(): "+c.getString(0));
+			//System.out.println("getContactByPhone(): "+c.getString(0));
 		}
 		
 		return contactInfo;
@@ -170,5 +170,11 @@ public class ContactOpreation {
 	    contentResolver.applyBatch("com.android.contacts", operations);
 	}
 	
+	public void deleteByPhone(String phone){
+		Uri url=null;
+		String where=null;
+		String[] selectionArgs=null;
+		contentResolver.delete(url, where, selectionArgs);
+	}
 	
 }

@@ -103,7 +103,7 @@ public class SmsOperation {
 					                                           projection, 
 					                                           "thread_id="+smsInfo.getThreadId(),
 					                                           null, 
-					                                           null);
+					                                           "date desc");
 			
 			if(cursor.moveToFirst()){ 
 				
