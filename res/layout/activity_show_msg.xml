@@ -8,6 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 
         android:divider="@null"
+        android:stackFromBottom="true"
         android:layout_above="@+id/msg_edit_and_sent"
         >
         

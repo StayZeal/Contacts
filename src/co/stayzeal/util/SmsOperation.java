@@ -38,8 +38,7 @@ public class SmsOperation {
         "date",       // 4  
         "body",       // 5  
         "read",       // 6; 0:not read 1:read; default is 0  
-        "type",       // 7; 0:all 1:inBox 2:sent 3:draft 4:outBox 5:failed  
-                      // 6:queued  
+        "type",       // 7; 0:all 1:inBox 2:sent 3:draft 4:outBox 5:failed   6:queued  
         "service_center" // 8
         };  
 
@@ -56,7 +55,7 @@ public class SmsOperation {
 	public List<SmsInfo> getSmsInfoList() {
 		smsList = new ArrayList<SmsInfo>();
 		String[] projection = new String[] { "_id", "address", "person","body", "date", "type" };  
-		Cursor cursor=context.getContentResolver().query(Uri.parse(CONTENT_URI_SMS_INBOX), projection, null, null, null);
+		Cursor cursor=context.getContentResolver().query(Uri.parse(CONTENT_URI_SMS_INBOX), projection, null, null, "date desc");
 		if(cursor.moveToFirst()){
 			do{
 				SmsInfo sms=new SmsInfo();

@@ -49,7 +49,10 @@ public class ShowMsg extends Activity {
 		Intent intent=getIntent();
 		Bundle b=intent.getBundleExtra("bundle");
 		String threadId=b.getString("threadId");
+		String title=b.getString("title");
         String[] projection = new String[] { "date", "address", "person","body", "type" }; // 查询的列  
+        
+        setTitle(title);
         
         asyncQuery.startQuery(0, null, uri, projection,"thread_id = " + threadId, null, "date asc"); 
  

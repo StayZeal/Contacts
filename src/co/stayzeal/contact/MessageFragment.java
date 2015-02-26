@@ -138,6 +138,11 @@ System.out.println(dataSource.get(position).getSnippe());
 			Intent intent =new Intent();
 			Bundle bundle=new Bundle();
 			if(smsInfo!=null){
+				if(smsInfo.getContactName()!=null){
+					bundle.putString("title", smsInfo.getContactName());;
+				}else{
+					bundle.putString("title", smsInfo.getAddress());
+				}
 				bundle.putString("address", smsInfo.getAddress());
 				bundle.putString("threadId", smsInfo.getThreadId());
 			}else{
