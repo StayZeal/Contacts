@@ -1,14 +1,19 @@
 package co.stayzeal.contact;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import co.stayzeal.contact.model.SmsInfo;
+import co.stayzeal.util.LoadSmsTask;
 import co.stayzeal.util.SmsOperation;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -42,24 +47,57 @@ public class MessageFragment extends Fragment {
 		return view;
 	}
 	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu, inflater);
+		 menu.add("Menu 1a").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+         menu.add("Menu 1b").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		return super.onOptionsItemSelected(item);
+	}
+
 	public void init(){
 		
-		getActivity().setTitle(TITLE_NAME);
+		//getActivity().setTitle(TITLE_NAME);
 		
-		smsOperation=new SmsOperation(getActivity());
+		/*smsOperation=new SmsOperation(getActivity());
 		//smsList=smsOperation.getSmsInfoList();
 		smsList=smsOperation.getThreads(0);
-		/*for (SmsInfo smsInfo : smsList) {
+		for (SmsInfo smsInfo : smsList) {
 			System.out.println(smsInfo.getAddress());
 			System.out.println(smsInfo.getBody());
 			System.out.println(smsInfo.getPerson());
-		}*/
+		}
 		List<SmsInfo> dataSource=smsOperation.getThreadNum(smsList);
-		/*for (SmsInfo smsInfo : dataSource) {
+		for (SmsInfo smsInfo : dataSource) {
 			System.out.println("Thread Id: "+smsInfo.getThreadId());
 		}*/
-		myAdapter=new MyAdapter(getActivity(),dataSource);
-		msgListView.setAdapter(myAdapter);
+		List<SmsInfo> dataSource;
+		LoadSmsTask loadSmsTask = new LoadSmsTask();
+		try {
+			dataSource = loadSmsTask.execute(getActivity()).get();
+			myAdapter=new MyAdapter(getActivity(),dataSource);
+			msgListView.setAdapter(myAdapter);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private  static class ViewHolder{

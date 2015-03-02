@@ -24,6 +24,7 @@ public class SmsInfo {
 	private String serviceCenter;//短信服务中心号码编号。如+8613800755500
 	private String snippe;//短信的前45个字符
 	private int msgCount;//每个回话的短消息数
+	private Date lastDate;//记录最新接收或发送短信的日期
 //	private int layoutType;//记录layout的类型
 	
 	public SmsInfo(){
@@ -129,6 +130,12 @@ public class SmsInfo {
 	}
 	public void setMsgCount(int msgCount) {
 		this.msgCount = msgCount;
+	}
+	public Date getLastDate() {
+		return lastDate;
+	}
+	public void setLastDate(Date lastDate) {
+		this.lastDate = lastDate;
 	}
 	
 }
