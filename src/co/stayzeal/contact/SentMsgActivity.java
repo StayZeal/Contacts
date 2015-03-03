@@ -1,15 +1,16 @@
 package co.stayzeal.contact;
 
 import co.stayzeal.util.SmsOperation;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.provider.Telephony.Sms;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class SentMsgActivity extends Activity {
 
@@ -29,30 +30,40 @@ public class SentMsgActivity extends Activity {
 		msgContent=(EditText) findViewById(R.id.msg_content);
 		msgSendBtn=(Button) findViewById(R.id.msg_send_btn);
 	    smsOperation = new SmsOperation(this);
-		destinationAddress = msgSendTo.getText().toString().trim();
-		smsContent = msgContent.getText().toString().trim();
+		
 		msgSendBtn.setOnClickListener( new OnClickListener() {
 			
+			@SuppressLint("ShowToast")
 			@Override
 			public void onClick(View v) {
-				smsOperation.sentSms(destinationAddress, smsContent);
-				System.out.println("msg is send ....");
+				destinationAddress = msgSendTo.getText().toString().trim();
+				
+				smsContent = msgContent.getText().toString().trim();
+				if(destinationAddress==null||destinationAddress==" "){
+					Toast.makeText(SentMsgActivity.this, "请输入联系人..", Toast.LENGTH_SHORT);
+				}else{
+System.out.println("destinationAddress: "+destinationAddress);
+					if(smsContent==null||smsContent==" "){
+						Toast.makeText(SentMsgActivity.this, "请输入短信内容..", Toast.LENGTH_SHORT);
+					}else{
+System.out.println("smsContent ：" + smsContent);
+						smsOperation.sentSms(destinationAddress, smsContent);
+						msgContent.clearComposingText();
+System.out.println("msg is send ....");
+					}
+				}
 			}
 		});
 	}
   
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.sent_msg, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import co.stayzeal.contact.model.SmsInfo;
+import co.stayzeal.util.SmsOperation;
 import co.stayzea.contact.adapter.*;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -14,9 +15,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 /**
- * http://blog.csdn.net/wwj_748/article/details/19984941
+ * 参考 ：http://blog.csdn.net/wwj_748/article/details/19984941
  * @author ArthorK
  *
  */
@@ -27,6 +32,10 @@ public class ShowMsg extends Activity {
 	private AsyncQueryHandler asyncQuery;  
 	private MsgConversationAdapter myAdapter;
 	private List<Integer> viewTypeList;
+	private String phoneNummber;
+	private Button sendBtn;
+	private EditText msgContent;
+	private SmsOperation smsOperation;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +51,8 @@ public class ShowMsg extends Activity {
 	public void  init(){
 		
 		msgConListView=(ListView) findViewById(R.id.msg_conversation_list);
+		sendBtn=(Button) findViewById(R.id.show_msg_sent_btn);
+		msgContent=(EditText) findViewById(R.id.show_msg_content_edit);
 		dataSource=new ArrayList<SmsInfo>();
 		viewTypeList=new ArrayList<Integer>();
 		asyncQuery=new MsgAsynQueryHandler(getContentResolver());
@@ -50,6 +61,7 @@ public class ShowMsg extends Activity {
 		Bundle b=intent.getBundleExtra("bundle");
 		String threadId=b.getString("threadId");
 		String title=b.getString("title");
+		phoneNummber = b.getString("address");
         String[] projection = new String[] { "date", "address", "person","body", "type" }; // 查询的列  
         
         setTitle(title);
@@ -59,6 +71,19 @@ public class ShowMsg extends Activity {
         myAdapter=new MsgConversationAdapter(this, dataSource,viewTypeList,2);
         msgConListView.setAdapter(myAdapter);
         System.out.println("init dataSource size : "+dataSource.size());
+        
+        smsOperation = new SmsOperation(this);
+        sendBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				String destinationAddress = phoneNummber;
+				String smsContent = msgContent.getText().toString().trim();
+				smsOperation.sentSms(destinationAddress, smsContent);
+				msgContent.clearComposingText();
+				myAdapter.notifyDataSetChanged();
+			}
+		});
  
 	}
 	/**

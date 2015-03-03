@@ -32,9 +32,6 @@ public class CallLogFragment extends Fragment {
 		listView=(ListView) view.findViewById(R.id.call_log_list);
 		init();
 		return view;
-		
-		
-		
 	}
 	
 	@Override

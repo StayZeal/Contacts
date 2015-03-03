@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -58,13 +59,25 @@ public class MessageFragment extends Fragment {
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu, inflater);
-		 menu.add("Menu 1a").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-         menu.add("Menu 1b").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		 menu.add(1, 1, 1, "写短信");
+		 menu.add(2, 1, 2, "设置");
+		 //menu.add("Menu 1a").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        // menu.add("Menu 1b").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
+		int id = item.getItemId();
+		switch (id) {
+		case 1:
+			Intent intent = new Intent();
+			intent.setClass(getActivity(), SentMsgActivity.class);
+			startActivity(intent);
+			break;
+
+		default:
+			break;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -151,7 +164,7 @@ public class MessageFragment extends Fragment {
 			}
 			viewHolder.msgIcon.setBackgroundResource(R.drawable.xiaoxin);
 			viewHolder.msgShort.setText(dataSource.get(position).getSnippe());
-System.out.println(dataSource.get(position).getSnippe());
+//System.out.println(dataSource.get(position).getSnippe());
             if(dataSource.get(position).getContactName()!=null){
             	viewHolder.nameOrPhone.setText(dataSource.get(position).getContactName());
             }else{

@@ -30,6 +30,8 @@
             android:layout_height="wrap_content" 
             android:textSize="15sp"
             android:singleLine="true"
+            android:text="snippe"
+            android:textColor="@color/msgSanippe"
             />
     </LinearLayout>
     
