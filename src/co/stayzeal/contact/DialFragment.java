@@ -1,13 +1,16 @@
 package co.stayzeal.contact;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -55,6 +58,11 @@ public class DialFragment extends Fragment {
 		
 		dialNumber=(EditText) view.findViewById(R.id.dial_number);
 		
+		InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE); 
+        imm.hideSoftInputFromWindow(dialNumber.getWindowToken(),0); 
+
+		dialNumber.setInputType(InputType.TYPE_NULL); //EditText始终不弹出软件键盘 
+		//dialNumber.setFocusable(false);//失去焦点
 		
 		btn=(Button) view.findViewById(R.id.dial_btn_call);
 		dial_0=(ImageButton) view.findViewById(R.id.dial_0);

@@ -45,7 +45,7 @@ public class CallLogFragment extends Fragment {
 	@Override
 	public void onStart() {
 		System.out.println(getClass().getName().toString()+"onStart()--->start");
-		getActivity().setTitle(TITLE_NAME);
+		//getActivity().setTitle(TITLE_NAME);
 		super.onStart();
 	}
 

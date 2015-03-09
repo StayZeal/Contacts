@@ -7,9 +7,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 /**
- * @ClassName: LoadSmsTask
- * @Description: 加载所有的短信息。
+ * 弃用
  * @author ArthorK
+ *
  */
 public class LoadSmsTask extends AsyncTask<Context, Void, List<SmsInfo>> {
 
@@ -23,7 +23,6 @@ public class LoadSmsTask extends AsyncTask<Context, Void, List<SmsInfo>> {
 
 	@Override
 	protected void onPostExecute(List<SmsInfo> result) {
-		// TODO Auto-generated method stub
 		super.onPostExecute(result);
 	}
 

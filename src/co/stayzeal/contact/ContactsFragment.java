@@ -47,7 +47,7 @@ public class ContactsFragment extends Fragment {
 	
 	private void init(){
 		Log.w(getClass().getName()+" init(): ", "start");
-		getActivity().setTitle(TITLE_NAME);
+		//getActivity().setTitle(TITLE_NAME);
 		getData();
 		myAdapter=new MyAdapter();
 		contactList.setAdapter(myAdapter);

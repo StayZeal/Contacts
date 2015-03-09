@@ -9,7 +9,7 @@
     <string name="contactsTitle">联系人</string>
     <string name="msgTitle">短信</string>
     <string name="contactInfo">联系人信息</string>
-    <string name="title_activity_navigate">NavigateActivity</string>
+    <string name="title_activity_navigate">通讯录</string>
     <string name="iconDidl">拨号Icon</string>
     <string name="iconCallLog">通话记录Icon</string>
     <string name="iconContacts">联系人Icon</string>

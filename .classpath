@@ -5,13 +5,5 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="lib" path="E:/android-sdk_r16-windows/android-sdk-windows/platforms/android-17/android.jar" sourcepath="E:/android-sdk_r16-windows/android-sdk-windows/sources/android-17">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/E:/android-sdk_r16-windows/android-sdk-windows/docs/reference"/>
-		</attributes>
-		<accessrules>
-			<accessrule kind="nonaccessible" pattern="com/android/internal/**"/>
-		</accessrules>
-	</classpathentry>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

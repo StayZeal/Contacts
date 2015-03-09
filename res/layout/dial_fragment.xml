@@ -21,8 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/icon_dial_voice_tube"
-            android:backgroundTint="#00ee33" />
+            android:background="@drawable/icon_list_phone"
+            />
         <!-- <ImageButton
             android:layout_width="0dp"
             android:layout_height="fill_parent"
@@ -205,6 +205,8 @@
         android:layout_height="wrap_content"
         android:inputType="phone"
         android:singleLine="true"
+        android:textSize="40sp"
+        android:background="@drawable/edittext_bg"
         android:layout_above="@id/dial_content_123"
         />
 

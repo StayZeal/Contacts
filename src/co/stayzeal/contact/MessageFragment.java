@@ -8,9 +8,11 @@ import co.stayzeal.util.LoadSmsTask;
 import co.stayzeal.util.SmsOperation;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,16 +28,15 @@ import android.widget.TextView;
 
 /**
  * 短信息Fragment
- * ？从sms表中读取信息，需要和联系人的名字对应起来的时候，查询速度 有点慢。
+ * 异步加载短信列表
  * @author ArthorK
  *
  */
 public class MessageFragment extends Fragment {
 
+	private static final String TAG="MessageFragment";
 	private String TITLE_NAME="短信";
 	
-	private SmsOperation smsOperation;
-	private List<SmsInfo> smsList;
 	private ListView msgListView;
 	private MyAdapter myAdapter;
 	
@@ -44,20 +45,18 @@ public class MessageFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View view=inflater.inflate(R.layout.message_fragment, container, false);
 		msgListView=(ListView) view.findViewById(R.id.msg_list);
-		init();
+		//init();
 		return view;
 	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu, inflater);
 		 menu.add(1, 1, 1, "写短信");
 		 menu.add(2, 1, 2, "设置");
@@ -81,36 +80,16 @@ public class MessageFragment extends Fragment {
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	public void onStart() {
+		super.onStart();
+		init();
+	}
+
 	public void init(){
-		
-		//getActivity().setTitle(TITLE_NAME);
-		
-		/*smsOperation=new SmsOperation(getActivity());
-		//smsList=smsOperation.getSmsInfoList();
-		smsList=smsOperation.getThreads(0);
-		for (SmsInfo smsInfo : smsList) {
-			System.out.println(smsInfo.getAddress());
-			System.out.println(smsInfo.getBody());
-			System.out.println(smsInfo.getPerson());
-		}
-		List<SmsInfo> dataSource=smsOperation.getThreadNum(smsList);
-		for (SmsInfo smsInfo : dataSource) {
-			System.out.println("Thread Id: "+smsInfo.getThreadId());
-		}*/
-		List<SmsInfo> dataSource;
-		LoadSmsTask loadSmsTask = new LoadSmsTask();
-		try {
-			dataSource = loadSmsTask.execute(getActivity()).get();
-			myAdapter=new MyAdapter(getActivity(),dataSource);
-			msgListView.setAdapter(myAdapter);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		Log.w(TAG, "init() start");
+		new SmsAsyncTask().execute(getActivity());
+		Log.w(TAG, "init() end");
 	}
 	
 	private  static class ViewHolder{
@@ -212,4 +191,21 @@ public class MessageFragment extends Fragment {
 		
 	}
 
+	public class SmsAsyncTask extends AsyncTask<Context, Void, List<SmsInfo>> {
+
+		@Override
+		protected List<SmsInfo> doInBackground(Context... params) {
+			SmsOperation smsOperation = new SmsOperation(params[0]);
+			List<SmsInfo> threads = smsOperation.getThreads(0);
+			List<SmsInfo> dataSource = smsOperation.getThreadNum(threads);
+			return dataSource;
+		}
+
+		@Override
+		protected void onPostExecute(List<SmsInfo> result) {
+			myAdapter=new MyAdapter(getActivity(),result);
+			msgListView.setAdapter(myAdapter);
+		}
+
+	}
 }
