@@ -54,7 +54,7 @@ public class DialFragment extends Fragment {
 
 	public void dial(View view){
 		
-		getActivity().setTitle(TITLE_NAME);
+		//getActivity().setTitle(TITLE_NAME);
 		
 		dialNumber=(EditText) view.findViewById(R.id.dial_number);
 		

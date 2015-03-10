@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -27,6 +28,7 @@ import android.widget.ListView;
  */
 public class ShowMsg extends Activity {
 
+	private static final String TAG = "ShowMSg";
 	private ListView msgConListView;
 	private List<SmsInfo> dataSource;
 	private AsyncQueryHandler asyncQuery;  
@@ -70,7 +72,7 @@ public class ShowMsg extends Activity {
  
         myAdapter=new MsgConversationAdapter(this, dataSource,viewTypeList,2);
         msgConListView.setAdapter(myAdapter);
-        System.out.println("init dataSource size : "+dataSource.size());
+        Log.w(TAG, "init dataSource size : "+dataSource.size());
         
         smsOperation = new SmsOperation(this);
         sendBtn.setOnClickListener(new OnClickListener() {
@@ -149,21 +151,10 @@ public class ShowMsg extends Activity {
                         dataSource.add(d);  
                     }  
                 }  
-//                if (datasource.size() > 0) {  
-//                    talkView.setAdapter(new MessageBoxListAdapter(  
-//                            MessageBoxList.this, messages));  
-//                    talkView.setDivider(null);  
-//                    talkView.setSelection(messages.size());  
-//                } else {  
-//                    Toast.makeText(MessageBoxList.this, "没有短信进行操作",  
-//                            Toast.LENGTH_SHORT).show();  
-//                }  
+ 
             }  
-//            for (SmsInfo s : dataSource) {
-//    			System.out.println("MessageAsynQueryHandler: "+s.getType());
-//    		}
+ 
             getViewTypeList(dataSource);
-            super.onQueryComplete(token, cookie, cursor);  
         }  
     }  
 }

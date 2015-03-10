@@ -14,10 +14,10 @@
     <string name="iconCallLog">通话记录Icon</string>
     <string name="iconContacts">联系人Icon</string>
     <string name="iconMessage">短信Icon</string>
-    <string name="title_activity_navigation_bar">NavigationBarActivity</string>
+    <string name="title_activity_navigation_bar">通讯录</string>
     <string name="title_activity_show_msg">ShowMsg</string>
-    <string name="title_activity_call_log_detail">CallLogDetailActivity</string>
-    <string name="title_activity_sent_msg">SentMsgActivity</string>
+    <string name="title_activity_call_log_detail">通话记录</string>
+    <string name="title_activity_sent_msg">写短息</string>
     <string name="title_activity_show_contact">联系人</string>
     <string name="title_activity_edit_contact">编辑联系人</string>
     <string name="contact_edit_menu_item">编辑</string>

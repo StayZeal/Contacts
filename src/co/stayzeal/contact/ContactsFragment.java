@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -21,7 +24,7 @@ import android.widget.TextView;
 @SuppressLint("InflateParams")
 public class ContactsFragment extends Fragment {
 
-	
+	private static final String TAG = "ContactsFragment";
 	private String TITLE_NAME="联系人";
 	//private Context context;
 	private ListView contactList;
@@ -33,7 +36,7 @@ public class ContactsFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		setHasOptionsMenu(true);
 	}
 
 	@Override
@@ -45,6 +48,33 @@ public class ContactsFragment extends Fragment {
 		return view;
 	}
 	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		menu.add("添加").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case 0:
+			Log.w(TAG, "点击了添加菜单项");
+			Intent intent = new Intent();
+			Bundle b = new Bundle();
+			b.putString("operation", "1");//1代表添加，0代表修改
+			b.putString("title", "添加联系人");
+			intent.putExtra("b", b);
+			intent.setClass(getActivity(), EditContactActivity.class);
+			startActivity(intent);
+			break;
+
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+		
+	}
+
 	private void init(){
 		Log.w(getClass().getName()+" init(): ", "start");
 		//getActivity().setTitle(TITLE_NAME);

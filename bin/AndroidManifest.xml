@@ -73,7 +73,7 @@
             android:name=".EditContactActivity"
             android:label="@string/title_activity_edit_contact" >
         </activity>
-        <receiver android:name=".PhoneReceiver">
+        <receiver android:name="co.stayzeal.util.PhoneReceiver">
             <intent-filter >
                 <action android:name="android.intent.action.PHONE_STATE"></action>
             </intent-filter>

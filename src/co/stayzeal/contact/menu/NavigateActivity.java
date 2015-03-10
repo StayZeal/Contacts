@@ -66,15 +66,19 @@ public class NavigateActivity extends FragmentActivity implements OnClickListene
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.contentDial:
+			setTitle("拨号");
 			dialClick();
 			break;
 		case R.id.contentCallLog:
+			setTitle("通话记录");
 			callLogClick();
 			break;
 		case R.id.contentContacts:
+			setTitle("联系人");
 			contactsClick();
 			break;
 		case R.id.contentMsg:
+			setTitle("短信息");
 			msgClick();
 			break;
 		default:

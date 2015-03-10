@@ -5,6 +5,7 @@ import java.util.List;
 
 import co.stayzeal.contact.model.ContactInfo;
 import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -13,8 +14,16 @@ import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.Data;
+import android.provider.ContactsContract.RawContacts;
+import android.provider.ContactsContract.CommonDataKinds.Email;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.CommonDataKinds.StructuredName;
+import android.util.Log;
 
 /**
+ * 
  * ContentResolver操作Android本地contact2数据库
  * @author ArthorK
  *
@@ -22,6 +31,7 @@ import android.os.RemoteException;
 
 public class ContactOpreation {
 
+	private static final String TAG = "ContactOpreation";
 	private Context context;
 	private ContentResolver contentResolver;
 	private Uri uri;
@@ -132,42 +142,38 @@ public class ContactOpreation {
 	 */
 	public void addContact2(ContactInfo contactInfo) throws RemoteException, OperationApplicationException{
 		  
-	    ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();  
-	  
-	    ContentProviderOperation operation1 = ContentProviderOperation //  
-	            .newInsert(Uri.parse("content://com.android.contacts/raw_contacts")) //  
-	            .withValue("_id", null) //  
-	            .build();  
-	    operations.add(operation1);  
-	  
-	    ContentProviderOperation operation2 = ContentProviderOperation //  
-	            .newInsert(Uri.parse("content://com.android.contacts/data")) //  
-	            .withValueBackReference("raw_contact_id", 0) //  
-	            .withValue("data2", contactInfo.getContactName()) //  
-	            .withValue("mimetype", "vnd.android.cursor.item/name") //  
-	            .build();  
-	    operations.add(operation2);  
-	      
-	    ContentProviderOperation operation3 = ContentProviderOperation //  
-	            .newInsert(Uri.parse("content://com.android.contacts/data")) //  
-	            .withValueBackReference("raw_contact_id", 0) //  
-	            .withValue("data1", contactInfo.getContactNumber()) //  
-	            .withValue("data2", "2") //  
-	            .withValue("mimetype", "vnd.android.cursor.item/phone_v2") //  
-	            .build();  
-	    operations.add(operation3);  
-	  
-	    ContentProviderOperation operation4 = ContentProviderOperation //  
-	            .newInsert(Uri.parse("content://com.android.contacts/data")) //  
-	            .withValueBackReference("raw_contact_id", 0) //  
-	            .withValue("data1", contactInfo.getEamil()) //  
-	            .withValue("data2", "2") //  
-	            .withValue("mimetype", "vnd.android.cursor.item/email_v2") //  
-	            .build();  
-	    operations.add(operation4);  
-	  
-	    // �������жԶ����������ִ��  
-	    contentResolver.applyBatch("com.android.contacts", operations);
+		ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+        int rawContactInsertIndex = 0;
+        ops.add(ContentProviderOperation.newInsert(RawContacts.CONTENT_URI)
+                .withValue(RawContacts.ACCOUNT_TYPE, null)
+                .withValue(RawContacts.ACCOUNT_NAME, null)
+                .build());
+        
+        //文档位置：reference\android\provider\ContactsContract.Data.html
+        ops.add(ContentProviderOperation.newInsert(android.provider.ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(Data.RAW_CONTACT_ID, rawContactInsertIndex)
+                .withValue(Data.MIMETYPE, StructuredName.CONTENT_ITEM_TYPE)
+                .withValue(StructuredName.GIVEN_NAME, "lisi")
+                .build());
+        ops.add(ContentProviderOperation.newInsert(android.provider.ContactsContract.Data.CONTENT_URI)
+                 .withValueBackReference(Data.RAW_CONTACT_ID, rawContactInsertIndex)
+                 .withValue(Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE)
+                 .withValue(Phone.NUMBER, "5556")
+                 .withValue(Phone.TYPE, Phone.TYPE_MOBILE)
+                 .withValue(Phone.LABEL, "")
+                 .build());
+        ops.add(ContentProviderOperation.newInsert(android.provider.ContactsContract.Data.CONTENT_URI)
+                 .withValueBackReference(Data.RAW_CONTACT_ID, rawContactInsertIndex)
+                 .withValue(Data.MIMETYPE, Email.CONTENT_ITEM_TYPE)
+                 .withValue(Email.DATA, "lisi@126.cn")
+                 .withValue(Email.TYPE, Email.TYPE_WORK)
+                 .build());
+        
+        ContentProviderResult[] results = contentResolver.applyBatch(ContactsContract.AUTHORITY,ops);
+        for (ContentProviderResult result : results) {
+            Log.i(TAG, result.uri.toString());
+        }
+   	
 	}
 	
 	public void deleteByPhone(String phone){

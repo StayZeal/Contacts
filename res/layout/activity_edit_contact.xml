@@ -8,9 +8,98 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="co.stayzeal.contact.EditContactActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/contact_edit_top_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentTop="true" >
+
+        <ImageView
+            android:id="@+id/contact_edit_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/avatar_default_68h" />
+
+        <TextView
+            android:id="@+id/contact_edit_text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/contact_edit_icon"
+            android:text="姓名：" />
+
+        <EditText
+            android:id="@+id/contact_edit_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/contact_edit_text_name" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/contact_edit_phone_content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contact_edit_top_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="手机号码：" />
+
+        <EditText
+            android:id="@+id/contact_edit_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:inputType="phone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contact_edit_phone_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="电子邮箱" />
+
+        <EditText
+            android:id="@+id/contact_edit_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:inputType="textEmailAddress" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <ImageButton
+            android:layout_centerHorizontal="true"
+            android:id="@+id/contact_edit_btn_line" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <Button
+            android:id="@+id/contact_edit_btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/contact_edit_btn_line"
+            android:text="保存" />
+        <Button
+            android:layout_toRightOf="@id/contact_edit_btn_line"
+            android:id="@+id/contact_edit_btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消" />
+    </RelativeLayout>
 
 </RelativeLayout>

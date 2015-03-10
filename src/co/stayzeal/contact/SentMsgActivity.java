@@ -3,7 +3,9 @@ package co.stayzeal.contact;
 import co.stayzeal.util.SmsOperation;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 public class SentMsgActivity extends Activity {
 
+	private static final String TAG = "SentMsgActivity";
 	private EditText msgSendTo;
 	private EditText msgContent;
 	private Button msgSendBtn;
@@ -37,19 +40,23 @@ public class SentMsgActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				destinationAddress = msgSendTo.getText().toString().trim();
-				
 				smsContent = msgContent.getText().toString().trim();
-				if(destinationAddress==null||destinationAddress==" "){
-					Toast.makeText(SentMsgActivity.this, "请输入联系人..", Toast.LENGTH_SHORT);
+				Log.w(TAG, "destinationAddress: "+destinationAddress);
+				Log.w(TAG, "smsContent ：" + smsContent);
+				if(destinationAddress==null||destinationAddress.equals("")){
+					Toast.makeText(SentMsgActivity.this, "请输入联系人..", Toast.LENGTH_SHORT).show();
 				}else{
-System.out.println("destinationAddress: "+destinationAddress);
-					if(smsContent==null||smsContent==" "){
-						Toast.makeText(SentMsgActivity.this, "请输入短信内容..", Toast.LENGTH_SHORT);
+					if(smsContent==null||smsContent.equals("")){
+						Toast.makeText(SentMsgActivity.this, "请输入短信内容..", Toast.LENGTH_SHORT).show();
 					}else{
-System.out.println("smsContent ：" + smsContent);
 						smsOperation.sentSms(destinationAddress, smsContent);
 						msgContent.clearComposingText();
-System.out.println("msg is send ....");
+						Log.w(TAG, "msg is send ....");
+						Intent intent = new Intent();
+						Bundle b = new Bundle();
+						//b.putString(, value);
+						intent.setClass(SentMsgActivity.this, ShowMsg.class);
+						startActivity(intent);
 					}
 				}
 			}

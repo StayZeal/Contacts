@@ -5,16 +5,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.RemoteException;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 import android.provider.ContactsContract.Contacts;
+import android.provider.ContactsContract.Data;
+import android.provider.ContactsContract.RawContacts;
+import android.util.Log;
 import co.stayzeal.contact.model.ContactInfo;
 
 /**
@@ -25,6 +34,7 @@ import co.stayzeal.contact.model.ContactInfo;
  */
 public class ContactDBOperaion {
 
+	private static final String TAG = "ContactDBOperaion";
 	private ContentResolver contentResolver;
 
 	public ContactDBOperaion(Context context) {
@@ -119,13 +129,74 @@ public class ContactDBOperaion {
         }
         return "#";
     }
-    
+    /**
+     * 通过事物添加联系人
+     * @param contactInfo
+     * @throws OperationApplicationException 
+     * @throws RemoteException 
+     */
+    public void addContact(ContactInfo contactInfo) throws RemoteException, OperationApplicationException{
+    	ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();  
+  	  
+	    ContentProviderOperation operation1 = ContentProviderOperation    
+	            .newInsert(Uri.parse("content://com.android.contacts/raw_contacts"))   
+	            .withValue("_id", null)     
+	           // .withValue(RawContacts.ACCOUNT_TYPE, null)
+                 //.withValue(RawContacts.ACCOUNT_NAME, null)
+	            .build();  
+	    operations.add(operation1);  
+	    ContentProviderOperation operation2 = ContentProviderOperation    
+	            .newInsert(Uri.parse("content://com.android.contacts/data"))    
+	            .withValueBackReference("raw_contact_id", 0)    
+	            .withValue("data2", contactInfo.getContactName())  
+	            .withValue("mimetype", "vnd.android.cursor.item/name")  
+	            .build();  
+	    operations.add(operation2);  
+	      
+	    ContentProviderOperation operation3 = ContentProviderOperation  
+	            .newInsert(Uri.parse("content://com.android.contacts/data"))   
+	            .withValueBackReference("raw_contact_id", 0)  
+	            .withValue("data1", contactInfo.getAddress())  
+	            .withValue("data2", "2")  
+	            .withValue("mimetype", "vnd.android.cursor.item/phone_v2")    
+	            .build();  
+	    operations.add(operation3);  
+	  
+	    ContentProviderOperation operation4 = ContentProviderOperation  
+	            .newInsert(Uri.parse("content://com.android.contacts/data"))   
+	            .withValueBackReference("raw_contact_id", 0)   
+	            .withValue("data1", contactInfo.getEamil())  
+	            .withValue("data2", "2")  
+	            .withValue("mimetype", "vnd.android.cursor.item/email_v2")  
+	            .build();  
+	    operations.add(operation4);  
+	  
+	  //  try {
+			//contentResolver.applyBatch("com.android.contacts", operations);
+			ContentProviderResult[] results = contentResolver.applyBatch(ContactsContract.AUTHORITY,operations);
+	        for (ContentProviderResult result : results) {
+	            Log.i(TAG, result.uri.toString());
+	        }
+	        Log.i(TAG, "添加联系人成功");
+	/*	} catch (RemoteException e) {
+			Log.e(TAG, "添加联系人出错");
+			e.printStackTrace();
+		} catch (OperationApplicationException e) {
+			Log.e(TAG, "添加联系人出错");
+			e.printStackTrace();
+		}*/
+    }
     /**
      * 删除联系人
      * @return
+     * @throws OperationApplicationException 
+     * @throws RemoteException 
      */
-    public boolean deleteContacts(){
+    public boolean deleteContacts()  {
     	
+    	 
     	return true;
     }
+    
+   /* */
 }
