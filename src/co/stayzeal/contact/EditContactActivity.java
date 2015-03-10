@@ -4,9 +4,7 @@ import co.stayzeal.contact.model.ContactInfo;
 import co.stayzeal.util.ContactDBOperaion;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.OperationApplicationException;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,6 +52,15 @@ public class EditContactActivity extends Activity {
 		
 		setTitle(title);
 
+		iconImage.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		saveBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -95,15 +102,8 @@ public class EditContactActivity extends Activity {
 		contact.setAddress(phone);
 		contact.setContactName(name);
 		contact.setEamil(email);
-		try {
-			dbOpreation.addContact(contact);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (OperationApplicationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		dbOpreation.addContact(contact);
 		finish();
 	}
 	

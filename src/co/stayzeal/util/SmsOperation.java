@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
 import co.stayzeal.contact.model.SmsInfo;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,6 +14,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.telephony.SmsManager;
+import android.util.Log;
 
 /**
  * 短信息的相关操作
@@ -22,6 +24,7 @@ import android.telephony.SmsManager;
  */
 public class SmsOperation {
 
+	private static final String TAG = "SmsOperation";
 	private Context context;
 	private List<SmsInfo> smsList;
 	private Uri uri;
@@ -154,10 +157,10 @@ public class SmsOperation {
 			        	Date dt1=lhs.getLastDate();
 			        	Date dt2=rhs.getLastDate();
 			            if (dt1.getTime() < dt2.getTime()) {
-			                System.out.println(dt1.toString()+"在后: "+dt2.toString());
+//System.out.println(dt1.toString()+"在后: "+dt2.toString());
 			                return 1;
 			            } else if (dt1.getTime() > dt2.getTime()) {
-			                System.out.println(dt1.toString()+"在前: "+dt2.toString());
+//System.out.println(dt1.toString()+"在前: "+dt2.toString());
 			                return -1;
 			            } else {
 			                return 0;
@@ -182,6 +185,23 @@ public class SmsOperation {
 		}else{
 			smsManager.sendTextMessage(destinationAddress, null, smsContent, null, null);
 		}
-		return null;
+		return "send msg success!";
+	}
+	
+	/**
+	 * 通过电话号码 （address）获取sms conversion 的thread id。
+	 * @param address
+	 * @return thread_id
+	 */
+	public String getSmsConversationByAddress(String address){
+		Log.i(TAG, "getSmsConversationByAddress-->");
+		String selection="address="+address;
+		Cursor cursor = context.getContentResolver().query(Uri.parse(CONTENT_URI_SMS), new String[]{"thread_id"}, selection, null, null);
+		String threadId = null;
+		if(cursor.moveToFirst()){
+			threadId = cursor.getString(0);
+		}
+		Log.i(TAG, "thread id : " + threadId);
+		return threadId;
 	}
 }

@@ -17,12 +17,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
-import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 import android.provider.ContactsContract.Contacts;
-import android.provider.ContactsContract.Data;
-import android.provider.ContactsContract.RawContacts;
 import android.util.Log;
 import co.stayzeal.contact.model.ContactInfo;
 
@@ -37,10 +33,50 @@ public class ContactDBOperaion {
 	private static final String TAG = "ContactDBOperaion";
 	private ContentResolver contentResolver;
 
+
 	public ContactDBOperaion(Context context) {
 		this.contentResolver = context.getContentResolver();
 	}
 
+	public static String[] CONTACT_COLUMNS = new String[]{
+		"display_name", 
+		"sort_key",
+		"contact_id", 
+		"data1",
+		Phone.PHOTO_ID
+	};
+	/**
+	 * 根据电话号，获取联系人信息。
+	 * @param address
+	 * @return
+	 */
+	public ContactInfo getContactByAddress(String address){
+		ContactInfo contact = new ContactInfo();
+		Cursor cursor = contentResolver
+				.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, 
+						CONTACT_COLUMNS, "data1="+address, null, null);
+		if(cursor.moveToFirst()){
+			contact.setAddress(address);
+			contact.setId(cursor.getInt(cursor
+					.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)));
+			Long photoId=cursor.getLong(cursor.getColumnIndex(Phone.PHOTO_ID));
+			/**
+			 * 如果photoId>0说明有头像
+			 */
+			if(photoId>0){
+				Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI,contact.getId());;
+				InputStream is=Contacts.openContactPhotoInputStream(contentResolver, contactUri);
+				Bitmap contactIcon=BitmapFactory.decodeStream(is);
+				contact.setContactIcon(contactIcon);
+			}
+			contact.setContactName(cursor.getString(0));
+			contact.setContactNumber(cursor.getString(cursor
+					.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+			contact.setSortKey(getSortKey(cursor.getString(1)));
+		}
+		return contact;
+	}
+	
 	/**
 	 * 获取手机中的联系人
 	 * @return
@@ -55,8 +91,7 @@ public class ContactDBOperaion {
 			// 这里是获取联系人表的电话里的信息 包括：名字，名字拼音，联系人id,电话号码；
 			// 然后在根据"sort-key"排序
 			cursor = contentResolver
-					.query(uri, new String[] { "display_name", "sort_key",
-							"contact_id", "data1",Phone.PHOTO_ID }, null, null, "sort_key");
+					.query(uri, CONTACT_COLUMNS, null, null, "sort_key");
 			Long photoId;//联系人头像
 			Bitmap contactIcon=null;
 			if (cursor.moveToFirst()) {
@@ -74,7 +109,7 @@ public class ContactDBOperaion {
 						contactIcon=BitmapFactory.decodeStream(is);
 						contact.setContactIcon(contactIcon);
 					}
-					System.out.println("contactDbOperation: "+contact.getContactIcon());
+//					Log.i(TAG, "contactDbOperation: "+contact.getContactIcon());
 					contact.setContactName(cursor.getString(0));
 					contact.setContactNumber(cursor.getString(cursor
 							.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
@@ -135,7 +170,7 @@ public class ContactDBOperaion {
      * @throws OperationApplicationException 
      * @throws RemoteException 
      */
-    public void addContact(ContactInfo contactInfo) throws RemoteException, OperationApplicationException{
+    public void addContact(ContactInfo contactInfo) {
     	ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();  
   	  
 	    ContentProviderOperation operation1 = ContentProviderOperation    
@@ -171,20 +206,20 @@ public class ContactDBOperaion {
 	            .build();  
 	    operations.add(operation4);  
 	  
-	  //  try {
+	   try {
 			//contentResolver.applyBatch("com.android.contacts", operations);
 			ContentProviderResult[] results = contentResolver.applyBatch(ContactsContract.AUTHORITY,operations);
 	        for (ContentProviderResult result : results) {
 	            Log.i(TAG, result.uri.toString());
 	        }
 	        Log.i(TAG, "添加联系人成功");
-	/*	} catch (RemoteException e) {
+		} catch (RemoteException e) {
 			Log.e(TAG, "添加联系人出错");
 			e.printStackTrace();
 		} catch (OperationApplicationException e) {
 			Log.e(TAG, "添加联系人出错");
 			e.printStackTrace();
-		}*/
+		}
     }
     /**
      * 删除联系人

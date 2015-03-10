@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import co.stayzeal.contact.model.ContactInfo;
 import co.stayzeal.contact.model.SmsInfo;
+import co.stayzeal.util.ContactDBOperaion;
 import co.stayzeal.util.SmsOperation;
 import co.stayzea.contact.adapter.*;
 import android.annotation.SuppressLint;
@@ -34,10 +36,11 @@ public class ShowMsg extends Activity {
 	private AsyncQueryHandler asyncQuery;  
 	private MsgConversationAdapter myAdapter;
 	private List<Integer> viewTypeList;
-	private String phoneNummber;
+	private String address;
 	private Button sendBtn;
 	private EditText msgContent;
 	private SmsOperation smsOperation;
+	private ContactDBOperaion contactDBOperaion;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,8 @@ public class ShowMsg extends Activity {
 	 * 进行Activity的初始化
 	 */
 	public void  init(){
+		smsOperation = new SmsOperation(this);
+		contactDBOperaion = new ContactDBOperaion(this);
 		
 		msgConListView=(ListView) findViewById(R.id.msg_conversation_list);
 		sendBtn=(Button) findViewById(R.id.show_msg_sent_btn);
@@ -62,8 +67,15 @@ public class ShowMsg extends Activity {
 		Intent intent=getIntent();
 		Bundle b=intent.getBundleExtra("bundle");
 		String threadId=b.getString("threadId");
-		String title=b.getString("title");
-		phoneNummber = b.getString("address");
+		address = b.getString("address");
+		ContactInfo contactInfo =  contactDBOperaion.getContactByAddress(address);
+		String title;
+		if(contactInfo.getContactName()==null || contactInfo.getContactName().equals("")){
+			title = contactInfo.getAddress();
+		}else{
+			title = contactInfo.getContactName();
+		}
+		
         String[] projection = new String[] { "date", "address", "person","body", "type" }; // 查询的列  
         
         setTitle(title);
@@ -74,12 +86,11 @@ public class ShowMsg extends Activity {
         msgConListView.setAdapter(myAdapter);
         Log.w(TAG, "init dataSource size : "+dataSource.size());
         
-        smsOperation = new SmsOperation(this);
         sendBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				String destinationAddress = phoneNummber;
+				String destinationAddress = address;
 				String smsContent = msgContent.getText().toString().trim();
 				smsOperation.sentSms(destinationAddress, smsContent);
 				msgContent.clearComposingText();

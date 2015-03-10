@@ -3,6 +3,7 @@ package co.stayzeal.contact;
 import java.util.List;
 
 
+
 import co.stayzeal.contact.R;
 import co.stayzeal.contact.constant.MyColor;
 import co.stayzeal.contact.model.CallLogInfo;
@@ -11,6 +12,7 @@ import co.stayzeal.util.DateFormatUtil;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +22,7 @@ import android.widget.TextView;
 
 public class CallLogFragment extends Fragment {
 	
-	private String TITLE_NAME="通话记录";
+	private static final String TAG = "CallLogFragment";
 	private MyAdapter myAdapter;
 	private ListView listView;
 	private List<CallLogInfo> callList;
@@ -36,7 +38,7 @@ public class CallLogFragment extends Fragment {
 	
 	@Override
 	public void onResume() {
-		System.out.println(getClass().getName().toString()+"onResume()--->start");
+		Log.i(TAG, "onResume()--->start");
 		super.onResume();
 	}
 	
@@ -44,8 +46,7 @@ public class CallLogFragment extends Fragment {
 
 	@Override
 	public void onStart() {
-		System.out.println(getClass().getName().toString()+"onStart()--->start");
-		//getActivity().setTitle(TITLE_NAME);
+		Log.i(TAG, "onStart()--->start");
 		super.onStart();
 	}
 
@@ -59,6 +60,7 @@ public class CallLogFragment extends Fragment {
 	    
 		myAdapter=new MyAdapter(getActivity());
 		listView.setAdapter(myAdapter);
+		myAdapter.notifyDataSetChanged();
 		
 	}
 	
@@ -72,7 +74,6 @@ public class CallLogFragment extends Fragment {
 		
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
 			return callList.size();
 		}
 
@@ -110,7 +111,8 @@ public class CallLogFragment extends Fragment {
 			viewHolder.callDate.setText(DateFormatUtil.toYyMmDd(callList.get(position).getCallDate(), "yy/MM/dd"));
 			//viewHolder.callType.setText(callList.get(position).getCallType());
 			String callType="";
-			System.out.println("电话类型"+callList.get(position).getCallType());
+//			Log.i(TAG, "电话类型"+callList.get(position).getCallType());
+			
 			switch (callList.get(position).getCallType()) {
 			case 1:
 				callType="已接";

@@ -52,9 +52,12 @@ public class SentMsgActivity extends Activity {
 						smsOperation.sentSms(destinationAddress, smsContent);
 						msgContent.clearComposingText();
 						Log.w(TAG, "msg is send ....");
+						String threadId = smsOperation.getSmsConversationByAddress(destinationAddress);
 						Intent intent = new Intent();
 						Bundle b = new Bundle();
-						//b.putString(, value);
+						b.putString("address", destinationAddress);
+						b.putString("threadId", threadId);
+						intent.putExtra("bundle", b);
 						intent.setClass(SentMsgActivity.this, ShowMsg.class);
 						startActivity(intent);
 					}
