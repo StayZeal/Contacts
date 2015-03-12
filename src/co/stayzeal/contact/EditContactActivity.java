@@ -88,9 +88,9 @@ public class EditContactActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				//Log.w(TAG, "取消保存联系人");
-				//finish();
-				deleteContact();
+				Log.w(TAG, "取消保存联系人");
+				finish();
+				//deleteContact();
 			}
 		});
 		

@@ -28,7 +28,10 @@ public class NavigationBarActivity extends FragmentActivity  implements OnClickL
 	private View dialLayout,callLogLayout,contactsLayout,msgLayout;
 	private ImageView dialImg,callLogImg,contactsImg,msgImg;
 	private TextView dialText,callLogText,contactsText,msgText;
-	
+	private String TITLE_DIAL="拨号";
+	private String TITLE_CALL_LOG = "通话记录";
+	private String TITLE_CONTACTS = "联系人";
+	private String TITLE_MSG = "短息";
 	private FragmentManager fragManager;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +68,19 @@ public class NavigationBarActivity extends FragmentActivity  implements OnClickL
 		switch (v.getId()) {
 		case R.id.dialLayout:
 			setSelectedTab(0);
+			setTitle(TITLE_DIAL);
 			break;
 		case R.id.callLogLayout:
 			setSelectedTab(1);
+			setTitle(TITLE_CALL_LOG);
 			break;
 		case R.id.contactsLayout:
 			setSelectedTab(2);
+			setTitle(TITLE_CONTACTS);
 			break;
 		case R.id.msgLayout:
 			setSelectedTab(3);
+			setTitle(TITLE_MSG);
 			break;
 		default:
 			break;

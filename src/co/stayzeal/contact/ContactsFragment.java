@@ -25,7 +25,6 @@ import android.widget.TextView;
 public class ContactsFragment extends Fragment {
 
 	private static final String TAG = "ContactsFragment";
-	private String TITLE_NAME="联系人";
 	//private Context context;
 	private ListView contactList;
 	private List<ContactInfo> dataList;
@@ -74,10 +73,21 @@ public class ContactsFragment extends Fragment {
 		return super.onOptionsItemSelected(item);
 		
 	}
+    
+	@Override
+	public void onHiddenChanged(boolean hidden) {
+		Log.i(TAG, "onHiddenChanged()--->start");
+		super.onHiddenChanged(hidden);
+		if(isHidden()==false){
+			Log.i(TAG, "is show");
+			dataList.clear();
+			getData();
+			myAdapter.notifyDataSetChanged();
+		}
+	}
 
 	private void init(){
 		Log.w(getClass().getName()+" init(): ", "start");
-		//getActivity().setTitle(TITLE_NAME);
 		getData();
 		myAdapter=new MyAdapter();
 		contactList.setAdapter(myAdapter);

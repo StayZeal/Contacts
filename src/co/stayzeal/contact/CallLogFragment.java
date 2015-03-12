@@ -5,6 +5,7 @@ import java.util.List;
 
 
 
+
 import co.stayzeal.contact.R;
 import co.stayzeal.contact.constant.MyColor;
 import co.stayzeal.contact.model.CallLogInfo;
@@ -12,6 +13,7 @@ import co.stayzeal.util.CallLogOperation;
 import co.stayzeal.util.DateFormatUtil;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -32,6 +34,7 @@ public class CallLogFragment extends Fragment {
 	private MyAdapter myAdapter;
 	private ListView listView;
 	private List<CallLogInfo> callList;
+	private CallLogOperation c;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,14 +103,38 @@ public class CallLogFragment extends Fragment {
 		super.onDetach();
 	}
 
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		Log.i(TAG, "onActivityCreated()--->start");
+		super.onActivityCreated(savedInstanceState);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.i(TAG, "onActivityResult()--->start");
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	public void onHiddenChanged(boolean hidden) {
+		Log.i(TAG, "onHiddenChanged()--->start");
+		super.onHiddenChanged(hidden);
+		Log.i(TAG, "isHidden(): "+isHidden());
+		if(isHidden()==false){//如果没有隐藏，则从新load数据
+			callList.clear();
+			callList= c.getCallLogList();
+			myAdapter.notifyDataSetChanged();
+		}
+		
+	}
+
 	public void init(){
 		
-		CallLogOperation c=new CallLogOperation(getActivity());
+		c=new CallLogOperation(getActivity());
 	    callList= c.getCallLogList();
 	    
 		myAdapter=new MyAdapter(getActivity());
 		listView.setAdapter(myAdapter);
-		myAdapter.notifyDataSetChanged();
 		
 	}
 	
