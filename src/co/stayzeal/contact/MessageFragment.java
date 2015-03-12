@@ -141,7 +141,7 @@ public class MessageFragment extends Fragment {
 			}else{
 				viewHolder=(ViewHolder) convertView.getTag();
 			}
-			viewHolder.msgIcon.setBackgroundResource(R.drawable.xiaoxin);
+			//viewHolder.msgIcon.setBackgroundResource(R.drawable.xiaoxin);
 			viewHolder.msgShort.setText(dataSource.get(position).getSnippe());
 //System.out.println(dataSource.get(position).getSnippe());
             if(dataSource.get(position).getContactName()!=null){

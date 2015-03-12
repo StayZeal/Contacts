@@ -157,8 +157,8 @@ public class MsgConversationAdapter extends BaseAdapter{
 				break;
 			}
 		}
-System.out.println(dataSource.size());
-System.out.println(dataSource.get(position).getDate()+": "+DateFormatUtil.toYyMmDd(dataSource.get(position).getDate(),"yy-MM-dd"));
+//System.out.println(dataSource.size());
+//System.out.println(dataSource.get(position).getDate()+": "+DateFormatUtil.toYyMmDd(dataSource.get(position).getDate(),"yy-MM-dd"));
 		return convertView;
 	}
 	

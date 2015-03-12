@@ -17,6 +17,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.provider.Telephony.Sms;
+import android.telephony.SmsMessage;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,6 +44,9 @@ public class ShowMsg extends Activity {
 	private EditText msgContent;
 	private SmsOperation smsOperation;
 	private ContactDBOperaion contactDBOperaion;
+	private String[] projection;
+	private Uri uri;
+	private String threadId;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +66,14 @@ public class ShowMsg extends Activity {
 		msgConListView=(ListView) findViewById(R.id.msg_conversation_list);
 		sendBtn=(Button) findViewById(R.id.show_msg_sent_btn);
 		msgContent=(EditText) findViewById(R.id.show_msg_content_edit);
+		
 		dataSource=new ArrayList<SmsInfo>();
 		viewTypeList=new ArrayList<Integer>();
 		asyncQuery=new MsgAsynQueryHandler(getContentResolver());
-		Uri uri = Uri.parse("content://sms");  
+		uri = Uri.parse("content://sms");  
 		Intent intent=getIntent();
 		Bundle b=intent.getBundleExtra("bundle");
-		String threadId=b.getString("threadId");
+		threadId=b.getString("threadId");
 		address = b.getString("address");
 		ContactInfo contactInfo =  contactDBOperaion.getContactByAddress(address);
 		String title;
@@ -76,7 +83,7 @@ public class ShowMsg extends Activity {
 			title = contactInfo.getContactName();
 		}
 		
-        String[] projection = new String[] { "date", "address", "person","body", "type" }; // 查询的列  
+		projection = new String[] { "date", "address", "person","body", "type" }; // 查询的列  
         
         setTitle(title);
         
@@ -93,7 +100,12 @@ public class ShowMsg extends Activity {
 				String destinationAddress = address;
 				String smsContent = msgContent.getText().toString().trim();
 				smsOperation.sentSms(destinationAddress, smsContent);
-				msgContent.clearComposingText();
+				msgContent.setText("");
+				SmsInfo s = new SmsInfo();
+				s.setBody(smsContent);
+				s.setDate(new Date(System.currentTimeMillis()));
+				viewTypeList.add(MsgConversationAdapter.MSG_SENT_TYPE);
+				dataSource.add(s);
 				myAdapter.notifyDataSetChanged();
 			}
 		});
@@ -138,29 +150,24 @@ public class ShowMsg extends Activity {
   
         @Override  
         protected void onQueryComplete(int token, Object cookie, Cursor cursor) {  
+        	
+        	Log.w(TAG, "onQueryComplete start");
+        	
             if (cursor != null && cursor.getCount() > 0) {  
                 cursor.moveToFirst();  
                 for (int i = 0; i < cursor.getCount(); i++) {  
                     cursor.moveToPosition(i);  
+                    SmsInfo d = new SmsInfo();  
+                    d.setBody(cursor.getString(cursor.getColumnIndex("body")));
+                    d.setDate(new Date(cursor.getLong(cursor.getColumnIndex("date"))));
+                    d.setAddress(cursor.getString(cursor.getColumnIndex("address")));
                     if (cursor.getInt(cursor.getColumnIndex("type")) == 1) {// 接收的信息  
-                        SmsInfo d = new SmsInfo();  
-                        d.setBody(cursor.getString(cursor.getColumnIndex("body")));
-                        d.setDate(new Date(cursor.getLong(cursor  
-                            .getColumnIndex("date"))));
-                        d.setAddress(cursor.getString(cursor  
-                                .getColumnIndex("address")));
                         d.setType(1);
-                        dataSource.add(d);  
                     } else { // 发送的信息  
-                    	 SmsInfo d = new SmsInfo();  
-                         d.setBody(cursor.getString(cursor.getColumnIndex("body")));
-                         d.setDate(new Date(cursor.getLong(cursor  
-                             .getColumnIndex("date"))));
-                         d.setAddress(cursor.getString(cursor  
-                                 .getColumnIndex("address")));
                          d.setType(2);  
-                        dataSource.add(d);  
                     }  
+                    Log.w(TAG, d.getBody());
+                    dataSource.add(d);   
                 }  
  
             }  

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 public class DialFragment extends Fragment {
 
+	private static final String TAG = "DialFragment";
 	private String TITLE_NAME="拨号";
 	private EditText dialNumber;
 	private Button btn;
@@ -40,7 +42,7 @@ public class DialFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		System.out.println("onCreateView-->执行");
+		Log.i(TAG, "onCreateView-->执行");
 		View view=inflater.inflate(R.layout.dial_fragment, container,false);
 		dial(view);
 		return view;
@@ -48,7 +50,7 @@ public class DialFragment extends Fragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		System.out.println("onCreate-->执行");
+		Log.i(TAG, "onCreate-->执行");
 		super.onCreate(savedInstanceState);
 	}
 

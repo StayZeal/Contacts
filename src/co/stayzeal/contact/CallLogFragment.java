@@ -4,11 +4,13 @@ import java.util.List;
 
 
 
+
 import co.stayzeal.contact.R;
 import co.stayzeal.contact.constant.MyColor;
 import co.stayzeal.contact.model.CallLogInfo;
 import co.stayzeal.util.CallLogOperation;
 import co.stayzeal.util.DateFormatUtil;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,7 +21,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
+/**
+ * //http://blog.csdn.net/wwj_748/article/details/19970271
+ * @author ArthorK
+ *
+ */
 public class CallLogFragment extends Fragment {
 	
 	private static final String TAG = "CallLogFragment";
@@ -50,10 +56,51 @@ public class CallLogFragment extends Fragment {
 		super.onStart();
 	}
 
+	
+	
+	@Override
+	public void onDestroy() {
+		Log.i(TAG, "onDestroy()--->start");
+		super.onDestroy();
+	}
+
+	@Override
+	public void onPause() {
+		Log.i(TAG, "onPause()--->start");
+		super.onPause();
+	}
+
+	@Override
+	public void onStop() {
+		Log.i(TAG, "onStop()--->start");
+		super.onStop();
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		Log.i(TAG, "onAttach()--->start");
+		super.onAttach(activity);
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		Log.i(TAG, "onCreate()--->start");
+		super.onCreate(savedInstanceState);
+	}
+
+	@Override
+	public void onDestroyView() {
+		Log.i(TAG, "onDestroyView()--->start");
+		super.onDestroyView();
+	}
+
+	@Override
+	public void onDetach() {
+		Log.i(TAG, "onDetach()--->start");
+		super.onDetach();
+	}
+
 	public void init(){
-		
-		
-		//http://blog.csdn.net/wwj_748/article/details/19970271
 		
 		CallLogOperation c=new CallLogOperation(getActivity());
 	    callList= c.getCallLogList();

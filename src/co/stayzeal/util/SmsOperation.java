@@ -124,7 +124,7 @@ public class SmsOperation {
 				smsInfo.setAddress(cursor.getString(2));
 				smsInfo.setDate(new Date(cursor.getLong(4)));
 				smsInfo.setRead(cursor.getInt(6));
-				System.out.println(smsInfo.getAddress());
+//System.out.println(smsInfo.getAddress());
 				Cursor cursorName = context.getContentResolver().query(
 						ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
 						new String[]{ "display_name", "sort_key","contact_id", "data1" }, 

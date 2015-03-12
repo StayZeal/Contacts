@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 public class NavigationBarActivity extends FragmentActivity  implements OnClickListener{
 
+	private static final String TAG = "NavigationBarActivity";
 	private DialFragment dialFrag;
 	private CallLogFragment callLogFrag;
 	private ContactsFragment contactsFrag;
@@ -140,7 +142,7 @@ public class NavigationBarActivity extends FragmentActivity  implements OnClickL
 	 * @param transaction
 	 */
 	private void hideAllFrag(FragmentTransaction transaction) {
-		
+		Log.i(TAG, "hideAllFrag");
 		if(dialFrag!=null){
 			transaction.hide(dialFrag);
 			dialLayout.setSelected(false);
@@ -163,6 +165,7 @@ public class NavigationBarActivity extends FragmentActivity  implements OnClickL
 	 * 清除掉所有的选中状态。
 	 */
 	private void clearSelection() {
+		Log.i(TAG, "clearSelection");
 		dialImg.setBackgroundResource(R.drawable.icon_tab_dialer);
 		callLogImg.setBackgroundResource(R.drawable.icon_tab_calllog);
 		contactsImg.setBackgroundResource(R.drawable.icon_tab_contacts);
