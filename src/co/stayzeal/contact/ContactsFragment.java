@@ -1,5 +1,6 @@
 package co.stayzeal.contact;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.stayzeal.contact.model.ContactInfo;
@@ -16,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -29,7 +32,8 @@ public class ContactsFragment extends Fragment {
 	private ListView contactList;
 	private List<ContactInfo> dataList;
 	private MyAdapter myAdapter;
-	
+	private int contactsCount=0;
+	private ContactDBOperaion con;
 	
 	
 	@Override
@@ -80,28 +84,56 @@ public class ContactsFragment extends Fragment {
 		super.onHiddenChanged(hidden);
 		if(isHidden()==false){
 			Log.i(TAG, "is show");
-			dataList.clear();
+			/*dataList.clear();
 			getData();
-			myAdapter.notifyDataSetChanged();
+			myAdapter.notifyDataSetChanged();*/
 		}
 	}
 
 	private void init(){
 		Log.w(getClass().getName()+" init(): ", "start");
-		getData();
+		//getData();
+		dataList =new ArrayList<ContactInfo>();
+		con=new ContactDBOperaion(getActivity());
+		contactsCount=con.getContactsCount();
+		con.getContactsList(dataList, 0, 10);
 		myAdapter=new MyAdapter();
 		contactList.setAdapter(myAdapter);
+		contactList.setOnScrollListener(new OnScrollListener() {
+			
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				
+				
+				Log.i("contactList.setOnScrollListener firstVisibleItem",String.valueOf(firstVisibleItem));
+				Log.i("contactList.setOnScrollListener visibleItemCount",String.valueOf(visibleItemCount));
+				Log.i("contactList.setOnScrollListenerr totalItemCount",String.valueOf(totalItemCount));
+				if(totalItemCount<contactsCount){
+					if(firstVisibleItem+visibleItemCount==totalItemCount){
+						con.getContactsList(dataList, firstVisibleItem, visibleItemCount);
+					}
+				}
+				
+			}
+		});
 		Log.w(getClass().getName()+" init(): ", "end");
 	}
 	
-	private void getData(){
+	/*private void getData(){
 		Log.w(this.getClass().getName()+" getData()", "start");
 		//dataList=new ArrayList<ContactInfo>();
 		//ContactOpreation con=new ContactOpreation(getActivity());
 		ContactDBOperaion con=new ContactDBOperaion(getActivity());
+		contactsCount=con.getContactsCount();
 		dataList=con.getContactsList();
 		Log.w(this.getClass().getName()+" getData()", "end");
-	}
+	}*/
 	
 	private class MyAdapter extends BaseAdapter{
 		

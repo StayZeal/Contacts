@@ -1,5 +1,6 @@
 package co.stayzeal.contact;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -20,6 +21,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -39,6 +42,9 @@ public class MessageFragment extends Fragment {
 	
 	private ListView msgListView;
 	private MyAdapter myAdapter;
+	private List<SmsInfo> dataSource;
+	private int countItems=0;//记录一页能显示的item的数目
+	private int startPosition=0;//记录数据开始的位置
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,6 +94,28 @@ public class MessageFragment extends Fragment {
 
 	public void init(){
 		Log.w(TAG, "init() start");
+		dataSource = new ArrayList<SmsInfo>();
+		myAdapter = new MyAdapter(getActivity(), dataSource);
+		msgListView.setAdapter(myAdapter);
+		msgListView.setOnScrollListener(new OnScrollListener() {
+			
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				Log.i("msgListView.setOnScrollListener firstVisibleItem",String.valueOf(firstVisibleItem));
+				Log.i("msgListView.setOnScrollListener visibleItemCount",String.valueOf(visibleItemCount));
+				Log.i("msgListView.setOnScrollListener totalItemCount",String.valueOf(totalItemCount));
+				
+			}
+		});
+		countItems= msgListView.getLastVisiblePosition() - msgListView.getFirstVisiblePosition();
+		Log.i(TAG+" countItems : ", String.valueOf(countItems));
 		new SmsAsyncTask().execute(getActivity());
 		Log.w(TAG, "init() end");
 	}
@@ -106,11 +134,11 @@ public class MessageFragment extends Fragment {
 	private class MyAdapter  extends BaseAdapter{
 
 		private Context context;
-		private List<SmsInfo> dataSource;
+		//private List<SmsInfo> dataSource;
 		
 		public MyAdapter(Context context,List<SmsInfo> dataSource) {
 			this.context=context;
-			this.dataSource=dataSource;
+			//this.dataSource=dataSource;
 		}
 		
 		@Override
@@ -155,7 +183,6 @@ public class MessageFragment extends Fragment {
 			 * 设置监听器
 			 */
 			convertView.setOnClickListener(new MsgItemClickListener(dataSource.get(position)));
-			
 			return convertView;
 		}
 		
@@ -193,18 +220,25 @@ public class MessageFragment extends Fragment {
 
 	public class SmsAsyncTask extends AsyncTask<Context, Void, List<SmsInfo>> {
 
+		
 		@Override
 		protected List<SmsInfo> doInBackground(Context... params) {
+			Long start = System.currentTimeMillis();
 			SmsOperation smsOperation = new SmsOperation(params[0]);
 			List<SmsInfo> threads = smsOperation.getThreads(0);
-			List<SmsInfo> dataSource = smsOperation.getThreadNum(threads);
+			dataSource = smsOperation.getThreadNum(threads);
+			Long end = System.currentTimeMillis();
+			Long d= end-start;
+			Log.i(TAG+"SmsAsyncTask", "用时： "+d);
 			return dataSource;
 		}
 
 		@Override
 		protected void onPostExecute(List<SmsInfo> result) {
-			myAdapter=new MyAdapter(getActivity(),result);
-			msgListView.setAdapter(myAdapter);
+			/*myAdapter=new MyAdapter(getActivity(),result);
+			msgListView.setAdapter(myAdapter);*/
+			myAdapter.notifyDataSetChanged();
+			Log.i(TAG, "onPostExecute");
 		}
 
 	}

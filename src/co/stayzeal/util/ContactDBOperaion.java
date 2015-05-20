@@ -77,11 +77,79 @@ public class ContactDBOperaion {
 		return contact;
 	}
 	
+	public int getContactsCount(){
+		int count=0;
+		Cursor cursor = null;
+ 
+		Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+		//Uri uri1=ContactsContract.Data.CONTENT_URI;
+		// 这里是获取联系人表的电话里的信息 包括：名字，名字拼音，联系人id,电话号码；
+		// 然后在根据"sort-key"排序
+		cursor = contentResolver.query(uri, new String[]{"display_name"}, null, null, "sort_key");
+		if(cursor.moveToFirst()){
+			do{
+				count++;
+			}while(cursor.moveToNext());
+		}
+        cursor.close();		
+		return count;
+	}
+	
 	/**
 	 * 获取手机中的联系人
 	 * @return
 	 */
-	public List<ContactInfo> getContactsList() {
+	public List<ContactInfo> getContactsList(List<ContactInfo> contactInfos,int start,int count) {
+
+		//List<ContactInfo> contactInfos = new ArrayList<ContactInfo>();
+		Cursor cursor = null;
+		try {
+			Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+			//Uri uri1=ContactsContract.Data.CONTENT_URI;
+			// 这里是获取联系人表的电话里的信息 包括：名字，名字拼音，联系人id,电话号码；
+			// 然后在根据"sort-key"排序
+			cursor = contentResolver
+					.query(uri, CONTACT_COLUMNS, null, null, "sort_key ");
+			Long photoId;//联系人头像
+			Bitmap contactIcon=null;
+			if (cursor.moveToFirst()) {
+				do {
+					ContactInfo contact = new ContactInfo();
+					contact.setId(cursor.getInt(cursor
+							.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)));
+					photoId=cursor.getLong(cursor.getColumnIndex(Phone.PHOTO_ID));
+					/**
+					 * 如果photoId>0说明有头像
+					 */
+					if(photoId>0){
+						Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI,contact.getId());;
+						InputStream is=Contacts.openContactPhotoInputStream(contentResolver, contactUri);
+						contactIcon=BitmapFactory.decodeStream(is);
+						contact.setContactIcon(contactIcon);
+					}
+//					Log.i(TAG, "contactDbOperation: "+contact.getContactIcon());
+					contact.setContactName(cursor.getString(0));
+					contact.setContactNumber(cursor.getString(cursor
+							.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+					contact.setSortKey(getSortKey(cursor.getString(1)));
+					
+					contactInfos.add(contact);
+				} while (cursor.moveToNext());
+			}
+		} catch (Exception e) {
+
+		} finally {//使用之后要关闭
+			cursor.close();
+		}
+		return contactInfos;
+	}
+	/**
+	 * 每次只获取一部分联系人。
+	 * @param startPosition
+	 * @param count
+	 * @return
+	 */
+	public List<ContactInfo> getContactsListFew(int startPosition,int count) {
 
 		List<ContactInfo> contactInfos = new ArrayList<ContactInfo>();
 		Cursor cursor = null;

@@ -62,6 +62,7 @@ public class SmsOperation {
 	 * @return
 	 */
 	public List<SmsInfo> getSmsInfoList() {
+		Long start = System.currentTimeMillis();
 		smsList = new ArrayList<SmsInfo>();
 		String[] projection = new String[] { "_id", "address", "person","body", "date", "type" };  
 		Cursor cursor=context.getContentResolver().query(Uri.parse(CONTENT_URI_SMS_INBOX), projection, null, null, "date desc");
@@ -79,6 +80,9 @@ public class SmsOperation {
 			}while(cursor.moveToNext());
 		}
 		cursor.close();
+		Long end = System.currentTimeMillis();
+		Long d = end-start;
+		Log.i(TAG+" getSmsInfoList", "用时： "+d);
 		return smsList;
 	}
 	
@@ -87,10 +91,14 @@ public class SmsOperation {
 	 * @param number
 	 * @return
 	 */
+	@SuppressLint("NewApi")
 	public List<SmsInfo> getThreads(int number){
+		Long start = System.currentTimeMillis();
 		smsList = new ArrayList<SmsInfo>();
 		String[] projection = new String[] { "thread_id","msg_count", "snippet" };  
-		Cursor cursor=context.getContentResolver().query(Uri.parse(CONTENT_URI_SMS_CONVERSATIONS), projection, null, null,null);
+		//Cursor cursor=context.getContentResolver().query(Uri.parse(CONTENT_URI_SMS_CONVERSATIONS), projection, null, null,null);
+		Cursor cursor=context.getContentResolver().query(Telephony.Sms.Conversations.CONTENT_URI, projection, null, null,null);
+		
 		if(cursor.moveToFirst()){
 			do{
 				SmsInfo sms=new SmsInfo(cursor.getString(0),cursor.getInt(1),cursor.getString(2));
@@ -100,16 +108,20 @@ public class SmsOperation {
 			}while(cursor.moveToNext());
 		}
 		cursor.close();
+		Long end = System.currentTimeMillis();
+		Long d = end-start;
+		Log.i(TAG+" getThreads", "用时： "+d);
 		return smsList;
 	}
 	
 	public List<SmsInfo> getThreadNum(List<SmsInfo> smsPara){
+		Long start = System.currentTimeMillis();
 		//System.out.println(smsPara.size());
 		String[] projection = SMS_COLUMNS;
 		List<SmsInfo> l=new ArrayList<SmsInfo>();
 		int flag;  //记录最新的短息
 		for (SmsInfo smsInfo : smsPara) {
-			//System.out.println("getThreadNum-->threadId: "+smsInfo.getThreadId());
+			System.out.println("getThreadNum-->threadId: "+smsInfo.getThreadId());
 			/**
 			 * 当有草稿时，这里会崩溃，？？？待解决
 			 */
@@ -172,6 +184,11 @@ public class SmsOperation {
 			    }
              
         });
+		
+		Long end = System.currentTimeMillis();
+		Long d = end-start;
+		Log.i(TAG+" getThreadNum", "用时： "+d);
+		
 		return l;
 	}
 	
